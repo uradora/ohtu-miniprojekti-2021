@@ -15,6 +15,8 @@ class ReadingTipService:
 
         return tip
 
+readingtip_service = ReadingTipService()
+
 
 
     

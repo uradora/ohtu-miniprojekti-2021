@@ -4,7 +4,7 @@ class ReadingTipRepository:
     def __init__(self):
         # later use SQLAlchemy database session here
         # for now, just a list and some test data
-        tips = ["tip 1", "tip 2"]
+        tips = []
         self._tips = tips
 
     def get_tips(self):
@@ -15,5 +15,5 @@ class ReadingTipRepository:
 
         return tip
 
-
+readingtip_repository = ReadingTipRepository()
         
