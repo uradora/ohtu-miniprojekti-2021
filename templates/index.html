@@ -1,6 +1,8 @@
 <ul>
     {% for tip in tips %}
-    <li>{{tip.title}} {{tip.link}}
+    <li>{{tip.title}} 
+        <a href={{tip.link}}>{{tip.link}}</a> 
+    </li>
     {% endfor %}
 </ul>
 
