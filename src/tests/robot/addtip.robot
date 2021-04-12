@@ -20,7 +20,7 @@ Adding A Tip With The Same Name
     Adding Should Fail With Message  Tips already contains tip with title Testi
 
 *** Keywords ***
-Adding Should Succeed
+Adding Should Succeed With 
     [Arguments] ${link}
     Main Page Should Be Open
     Page Should Contain  ${link}
