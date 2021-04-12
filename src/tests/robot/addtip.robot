@@ -35,11 +35,11 @@ Submit Tip
 
 Set Title
     [Arguments]  ${title}
-    Input Text  Otsikko:  ${title}
+    Input Text  title  ${title}
 
 Set Link
     [Arguments]  ${link}
-    Input Text  Linkki:  ${link}
+    Input Text  link  ${link}
 
 
 
