@@ -17,3 +17,9 @@ Open And Configure Browser
 
 Go To Main Page
     Go To  ${HOME URL}
+
+Main Page Should Be Open
+    Page Should Contain  Luo uusi vinkki
+
+Form Page Should Be Open 
+    Page Should Contain  Lähetä
