@@ -6,6 +6,8 @@ Coursework for Ohjelmistotuotanto spring 2021 course
 
 [Backlog](https://docs.google.com/spreadsheets/d/1qV2wRHAEE56b_gxE5BjBA0IYtefkVLVNk27P9XCbGIQ/edit#gid=0)
 
+[App in Heroku](https://python-lukuvinkit.herokuapp.com/)
+
 # Definition of done:
 - Story on dokumentoitu product backlogiin ja työmäärä estimoitu
 - Toiminnalliset vaatimukset testattu Robot Frameworkilla
