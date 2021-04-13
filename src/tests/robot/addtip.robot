@@ -17,16 +17,16 @@ Adding A Tip With The Same Name
     Set Title  testi
     Set Link  www.testi.fi
     Submit Tip
-    Adding Should Fail With Message  Tips already contains tip with title Testi
+    Adding Should Fail With Message  Tips already contains tip with title testi
 
 *** Keywords ***
-Adding Should Succeed With 
-    [Arguments] ${link}
+Adding Should Succeed With
+    [Arguments]  ${link}
     Main Page Should Be Open
     Page Should Contain  ${link}
 
 Adding Should Fail With Message
-    [Arguments] ${message}
+    [Arguments]  ${message}
     Form Page Should Be Open
     Page Should Contain  ${message}
 

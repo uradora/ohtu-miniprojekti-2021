@@ -5,7 +5,7 @@ Library  SeleniumLibrary
 *** Variables ***
 ${SERVER}  localhost:5000
 ${BROWSER}  chrome
-${DELAY}  2 seconds
+${DELAY}  0.5 seconds
 ${HOME URL}  http://${SERVER}
 
 
@@ -22,4 +22,4 @@ Main Page Should Be Open
     Page Should Contain  Luo uusi vinkki
 
 Form Page Should Be Open 
-    Page Should Contain  Lähetä
+    Page Should Contain Button  Lähetä
