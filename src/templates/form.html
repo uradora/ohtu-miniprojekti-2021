@@ -1,17 +1,29 @@
-<form action="/newtip" method="POST">
-    {% with messages = get_flashed_messages() %}  
-    {% if messages %}  
-          {% for message in messages %}  
-               <p>{{ message }}</p>  
-          {% endfor %}  
-    {% endif %}  
-    {% endwith %}  
-    Otsikko:
-    <input type="text" name="title">
-    <br>
-    Linkki:
-    <input type="text" name="link">
-    <br>
-    <input type="submit" value="Lähetä">
-</form>
+{% extends "layout.html" %}
 
+{% block body %}
+<form action="/newtip" method="POST">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="category" class="col-sm-2 col-form-label">title</label>
+            <input type="text" class="form-control" name="title" id="exampleInputEmail1">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="category" class="col-sm-2 col-form-label">link</label>
+            <input type="text" class="form-control" name="link" id="exampleInputEmail1">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lähetä</button>
+</form>
+{% endblock %}
