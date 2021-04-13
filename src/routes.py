@@ -5,11 +5,11 @@ from flask import redirect, render_template, request, flash
 @app.route("/newtip", methods=["POST"])
 def newtip():
     title = request.form["title"]
-    if(readingtip_service.containsTitle(title)):
+    if readingtip_service.contains_title(title):
         flash(f"Tips already contains tip with title {title}")
         return redirect("/form")
     readingtip_service.create_tip(title, request.form["link"])
-    return redirect("/") 
+    return redirect("/")
 
 @app.route("/form")
 def form():

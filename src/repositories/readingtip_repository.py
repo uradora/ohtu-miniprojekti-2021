@@ -15,5 +15,11 @@ class ReadingTipRepository:
 
         return tip
 
+    def contains_title(self, title):
+        for readingtip in self.get_tips():
+            if readingtip.title == title:
+                return True
+        return False
+
 readingtip_repository = ReadingTipRepository()
         

@@ -14,8 +14,8 @@ class TestReadingTip(unittest.TestCase):
         self.assertEqual(self.service.get_tips()[1].title, "Huono kirja")
 
     def test_contains_title_if_not_present(self):
-        assert not self.service.containsTitle("Hyvä kirja")
+        assert not self.service.contains_title("Hyvä kirja")
 
     def test_contains_title_if_present(self):
         self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123")
-        assert self.service.containsTitle("Hyvä kirja")
+        assert self.service.contains_title("Hyvä kirja")
