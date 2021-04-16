@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %} Add new tip {% endblock %}
+
 {% block body %}
 <form action="/newtip" method="POST">
     {% with messages = get_flashed_messages() %}

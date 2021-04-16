@@ -7,18 +7,18 @@ def newtip():
     title = request.form["title"]
     if readingtip_service.contains_title(title):
         flash(f"Tips already contains tip with title {title}")
-        return redirect("/form")
+        return redirect("/newtip")
     readingtip_service.create_tip(title, request.form["link"])
     return redirect("/")
 
-@app.route("/form")
-def form():
-    return render_template("form.html")
+@app.route("/newtip")
+def create_tip():
+    return render_template("newtip.html")
 
 @app.route("/")
-def index():
+def userpage():
     tips=readingtip_service.get_tips()
-    return render_template("index.html", tips=tips)
+    return render_template("userpage.html", tips=tips)
 
 @app.route("/login")
 def login():
