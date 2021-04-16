@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form action="" method="POST">
+    
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="username" class="col-sm-2 col-form-label">Username</label>
+            <input type="text" class="form-control" name="title" id="exampleInputEmail1">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="password" class="col-sm-2 col-form-label">Password</label>
+            <input type="text" class="form-control" name="link" id="exampleInputEmail1">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+{% endblock %}

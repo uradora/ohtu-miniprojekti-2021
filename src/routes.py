@@ -19,3 +19,7 @@ def form():
 def index():
     tips=readingtip_service.get_tips()
     return render_template("index.html", tips=tips)
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
