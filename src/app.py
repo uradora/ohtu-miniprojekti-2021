@@ -19,8 +19,10 @@ else:
 
 db.init_app(app)
 
+import routes # pylint: disable=unused-import, wrong-import-position
 
-try:
-    db.create_all()
-except SQLAlchemyError:
-    pass
+with app.app_context():
+    try:
+        db.create_all()
+    except SQLAlchemyError:
+        pass

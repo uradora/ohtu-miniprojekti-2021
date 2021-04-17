@@ -24,9 +24,13 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Run pylint
-        run: poetry run pylint src
+        run: poetry run pylint src --fail-under=8
       - name: Run tests
         run: poetry run coverage run -m pytest
+      - name: Check coverage
+        run: poetry run coverage report --fail-under=80
+      - name: Run robot tests
+        run: bash run_robot_tests.sh
       - name: Compose coverage report
         if: ${{ github.event_name == 'push'}}
         run: poetry run coverage xml

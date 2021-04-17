@@ -29,9 +29,11 @@ def login():
         password = request.form["password"]
         if user_service.login(username,password):
             return redirect("/")
-        flash("Login failed")
-        return redirect("/")
-    return render_template("login.html")
+        else:
+            flash("Login failed")
+            return redirect("/")
+    else:
+        return render_template("login.html")
 
 @app.route("/logout")
 def logout():
@@ -45,6 +47,12 @@ def register():
         password = request.form["password"]
         if user_service.register(username,password):
             return redirect("/")
-        flash("Register failed")
-        return redirect("/")
-    return render_template("register.html")
+        else:
+            flash("Register failed")
+            return redirect("/")
+    else:
+        return render_template("register.html")
+
+@app.route("/ping")
+def ping():
+    return "ping"
