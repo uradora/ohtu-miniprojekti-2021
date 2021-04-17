@@ -3,6 +3,9 @@ name: CI & CD
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
 
 jobs:
   test:
@@ -23,10 +26,13 @@ jobs:
       - name: Run tests
         run: poetry run coverage run -m pytest
       - name: Compose coverage report
+        if: ${{ github.event_name == 'push'}}
         run: poetry run coverage xml
       - name: Report to Codecov
+        if: ${{ github.event_name == 'push'}}
         run: bash <(curl -s https://codecov.io/bash)
   deploy:
+    if: ${{ github.event_name == 'push'}}
     name: Deploy to Heroku staging
     needs: test
     runs-on: ubuntu-latest
