@@ -26,4 +26,20 @@
         <button class="btn btn-primary" type="button">Luo uusi vinkki</button>
     </a>
 
-{% endblock %}
+
+    {% if session.username %}
+    <a href="logout">
+        <button class="btn btn-primary" type="button">Kirjaudu ulos</button>
+    </a>
+    {% else %}
+    <a href="login">
+        <button class="btn btn-primary" type="button">Kirjaudu sisään</button>
+    </a>
+    <a href="register">
+        <button class="btn btn-primary" type="button">Rekisteröidy</button>
+    </a>
+    {% endif %}
+    
+    {% endblock %}
+
+
