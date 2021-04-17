@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, flash
 from app import app
 from services.readingtip_service import readingtip_service
+from services.user_service import user_service
 
 
 @app.route("/newtip", methods=["POST"])
