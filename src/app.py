@@ -6,14 +6,13 @@ from database import db
 
 app = Flask(__name__)
 
-app.secret_key = "SECRET_KEY"
-
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-
 if os.environ.get("HEROKU"):
+    app.secret_key = os.environ.get("SECRET_KEY")
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 else:
+    app.secret_key = b"\xb9>S-}k0f\x0e*\\*m\x9c\x00\xcd"
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tips.db"
     #prints SQL-queries
     app.config["SQLALCHEMY_ECHO"] = True
