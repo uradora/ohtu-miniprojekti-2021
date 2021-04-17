@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Run pylint
-        run: poetry run pylint
+        run: poetry run pylint src
       - name: Run tests
         run: poetry run coverage run -m pytest
       - name: Compose coverage report
