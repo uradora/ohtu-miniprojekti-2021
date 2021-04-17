@@ -33,7 +33,7 @@ jobs:
         run: bash run_robot_tests.sh
         env:
           BROWSER: headlesschrome
-          DELAY: 10 seconds
+          DELAY: 1 seconds
       - name: Compose coverage report
         if: ${{ github.event_name == 'push'}}
         run: poetry run coverage xml
