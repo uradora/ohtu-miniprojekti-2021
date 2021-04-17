@@ -2,7 +2,7 @@
 
 # käynnistetään Flask-palvelin taustalle (huomaa & komennon lopussa)
 cd src
-poetry run flask run
+poetry run flask run &
 
 # odetetaan, että palvelin on valmiina ottamaan vastaan pyyntöjä,
 # jolloin localhost:5000/ping antaa vastauksen statuskoodilla 200
