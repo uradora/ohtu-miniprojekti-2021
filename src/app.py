@@ -10,7 +10,10 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 if os.environ.get("HEROKU"):
     app.secret_key = os.environ.get("SECRET_KEY")
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    uri = os.environ.get("DATABASE_URL")
+    # SQLAlchemy is picky about the protocol name, Heroku gives the wrong one.
+    uri = uri.replace("postgres://", "postgresql://")
+    app.config["SQLALCHEMY_DATABASE_URI"] = uri
 else:
     app.secret_key = b"\xb9>S-}k0f\x0e*\\*m\x9c\x00\xcd"
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tips.db"
