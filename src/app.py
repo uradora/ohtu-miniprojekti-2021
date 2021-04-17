@@ -8,6 +8,8 @@ app = Flask(__name__)
 
 app.secret_key = "SECRET_KEY"
 
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
 
 if os.environ.get("HEROKU"):
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
@@ -24,5 +26,5 @@ import routes # pylint: disable=unused-import, wrong-import-position
 with app.app_context():
     try:
         db.create_all()
-    except SQLAlchemyError:
-        pass
+    except SQLAlchemyError as e:
+        print(e)
