@@ -1,4 +1,3 @@
-from models.readingtip import ReadingTip
 
 class ReadingTipRepository:
     def __init__(self):
@@ -22,4 +21,3 @@ class ReadingTipRepository:
         return False
 
 readingtip_repository = ReadingTipRepository()
-        

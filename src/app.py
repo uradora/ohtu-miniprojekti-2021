@@ -1,6 +1,8 @@
-from flask import Flask
 import os
+from flask import Flask
+from sqlalchemy.exc import SQLAlchemyError
 from database import db
+
 
 app = Flask(__name__)
 
@@ -17,9 +19,8 @@ else:
 
 db.init_app(app)
 
-import routes
 
 try:
     db.create_all()
-except:
+except SQLAlchemyError:
     pass

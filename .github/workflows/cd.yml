@@ -23,6 +23,8 @@ jobs:
         run: pip install poetry
       - name: Install dependencies
         run: poetry install
+      - name: Run pylint
+        run: poetry run pylint
       - name: Run tests
         run: poetry run coverage run -m pytest
       - name: Compose coverage report

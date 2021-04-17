@@ -19,7 +19,3 @@ class ReadingTipService:
         return self._readingtip_repository.contains_title(title)
 
 readingtip_service = ReadingTipService()
-
-
-
-    
