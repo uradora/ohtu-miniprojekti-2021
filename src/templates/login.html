@@ -1,29 +1,24 @@
 {% extends "layout.html" %}
 
+{% block title %} Log in {% endblock %}
+
 {% block body %}
-<form action="/login" method="POST">
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    <p>{{ message }}</p>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-
+<form action="" method="POST">
+    
     <div class="form-row">
         <div class="form-group col-md-3">
-            <label for="category" class="col-sm-2 col-form-label">username</label>
-            <input type="text" class="form-control" name="user" id="username">
+            <label for="username" class="col-sm-2 col-form-label">Username</label>
+            <input type="text" class="form-control" name="title" id="exampleInputEmail1">
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-3">
-            <label for="category" class="col-sm-2 col-form-label">password</label>
-            <input type="password" class="form-control" name="password" id="password">
+            <label for="password" class="col-sm-2 col-form-label">Password</label>
+            <input type="text" class="form-control" name="link" id="exampleInputEmail1">
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Kirjaudu sisään</button>
+    <button type="submit" class="btn btn-primary">Login</button>
 </form>
 {% endblock %}

@@ -23,20 +23,20 @@
     </div>
 
     <a href="form">
-        <button class="btn btn-primary" type="button">Luo uusi vinkki</button>
+        <button class="btn btn-primary" type="button">Create new tip</button>
     </a>
 
 
     {% if session.username %}
     <a href="logout">
-        <button class="btn btn-primary" type="button">Kirjaudu ulos</button>
+        <button class="btn btn-primary" type="button">Logout</button>
     </a>
     {% else %}
     <a href="login">
-        <button class="btn btn-primary" type="button">Kirjaudu sisään</button>
+        <button class="btn btn-primary" type="button">Login</button>
     </a>
     <a href="register">
-        <button class="btn btn-primary" type="button">Rekisteröidy</button>
+        <button class="btn btn-primary" type="button">Register</button>
     </a>
     {% endif %}
     

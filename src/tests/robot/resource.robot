@@ -19,7 +19,7 @@ Go To Main Page
     Go To  ${HOME URL}
 
 Main Page Should Be Open
-    Page Should Contain  Luo uusi vinkki
+    Title Should Be  My tips - Reading Tips
 
-Form Page Should Be Open 
-    Page Should Contain Button  Lähetä
+Tip Form Page Should Be Open 
+    Title Should Be  Add new tip - Reading Tips

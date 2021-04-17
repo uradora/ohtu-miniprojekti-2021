@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %} Add new tip {% endblock %}
+
 {% block body %}
 <form action="/newtip" method="POST">
     {% with messages = get_flashed_messages() %}
@@ -12,18 +14,18 @@
 
     <div class="form-row">
         <div class="form-group col-md-3">
-            <label for="category" class="col-sm-2 col-form-label">title</label>
+            <label for="category" class="col-sm-2 col-form-label">Title</label>
             <input type="text" class="form-control" name="title" id="exampleInputEmail1">
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-3">
-            <label for="category" class="col-sm-2 col-form-label">link</label>
+            <label for="category" class="col-sm-2 col-form-label">Link</label>
             <input type="text" class="form-control" name="link" id="exampleInputEmail1">
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Lähetä</button>
+    <button type="submit" class="btn btn-primary">Add new tip</button>
 </form>
 {% endblock %}
