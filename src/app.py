@@ -1,6 +1,8 @@
-from flask import Flask
 import os
+from flask import Flask
+from sqlalchemy.exc import SQLAlchemyError
 from database import db
+
 
 app = Flask(__name__)
 
@@ -17,9 +19,10 @@ else:
 
 db.init_app(app)
 
-import routes
+import routes # pylint: disable=unused-import, wrong-import-position
 
-try:
-    db.create_all()
-except:
-    pass
+with app.app_context():
+    try:
+        db.create_all()
+    except SQLAlchemyError:
+        pass

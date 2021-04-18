@@ -1,6 +1,8 @@
+from flask import redirect, render_template, request, flash
 from app import app
 from services.readingtip_service import readingtip_service
-from flask import redirect, render_template, request, flash
+from services.user_service import user_service
+
 
 @app.route("/newtip", methods=["POST"])
 def newtip():
@@ -22,16 +24,16 @@ def userpage():
 
 @app.route("/login", methods=["GET","POST"])
 def login():
-    if request.method == "GET":
-        return render_template("login.html")
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         if user_service.login(username,password):
             return redirect("/")
         else:
-            flash(f"Login failed")
+            flash("Login failed")
             return redirect("/")
+    else:
+        return render_template("login.html")
 
 @app.route("/logout")
 def logout():
@@ -40,14 +42,17 @@ def logout():
 
 @app.route("/register", methods=["GET","POST"])
 def register():
-    if request.method == "GET":
-        return render_template("register.html")
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         if user_service.register(username,password):
             return redirect("/")
         else:
-            flash(f"Register failed")
+            flash("Register failed")
             return redirect("/")
+    else:
+        return render_template("register.html")
 
+@app.route("/ping")
+def ping():
+    return "ping"

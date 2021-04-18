@@ -4,8 +4,8 @@ Library  SeleniumLibrary
 
 *** Variables ***
 ${SERVER}  localhost:5000
-${BROWSER}  chrome
-${DELAY}  0.5 seconds
+${BROWSER}  %{BROWSER=chrome}
+${DELAY}  %{DELAY=1 seconds}
 ${HOME URL}  http://${SERVER}
 
 
