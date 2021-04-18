@@ -2,9 +2,29 @@ import unittest
 from services.readingtip_service import ReadingTipService
 from repositories.readingtip_repository import ReadingTipRepository
 
+class ReadingTipRepositoryStub:
+    def __init__(self):
+        tips = []
+        self._tips = tips
+
+    def get_tips(self):
+        return self._tips
+
+    def create_tip(self, tip):
+        self._tips.append(tip)
+
+        return tip
+
+    def contains_title(self, title):
+        for readingtip in self.get_tips():
+            if readingtip.title == title:
+                return True
+        return False
+
+
 class TestReadingTip(unittest.TestCase):
     def setUp(self):
-        self.repository = ReadingTipRepository()
+        self.repository = ReadingTipRepositoryStub()
         self.service = ReadingTipService(self.repository)
 
     def test_create_adds_to_collection(self):
