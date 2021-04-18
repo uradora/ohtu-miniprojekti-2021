@@ -12,7 +12,7 @@ ${HOME URL}  http://${SERVER}
 *** Keywords ***
 Open And Configure Browser
     Open Browser  browser=${BROWSER}
-    Set Window Size  1400  600
+    Maximize Browser Window
     Set Selenium Speed  ${DELAY}
 
 Go To Main Page
