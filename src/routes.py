@@ -26,8 +26,7 @@ def userpage():
 def login():
     if request.method == "POST":
         username = request.form["username"]
-        password = request.form["password"]
-        if user_service.login(username,password):
+        if user_service.login():
             return redirect("/")
         else:
             flash("Login failed")
