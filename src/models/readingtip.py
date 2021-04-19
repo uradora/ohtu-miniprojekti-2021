@@ -6,7 +6,7 @@ class ReadingTip(db.Model):
     link = db.Column(db.String(80), nullable = False)
 
     def __init__(self, title, link, **kwargs):
-        super(ReadingTip, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.title = title
         if not link.startswith("http://") and not link.startswith("https://"):
             link = "http://" + link

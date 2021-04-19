@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
-
+from login import login
 
 app = Flask(__name__)
 
@@ -22,11 +22,12 @@ else:
 
 
 db.init_app(app)
+login.init_app(app)
 
 import routes # pylint: disable=unused-import, wrong-import-position
 
 with app.app_context():
     try:
         db.create_all()
-    except SQLAlchemyError as e:
-        print(e)
+    except SQLAlchemyError as exception:
+        print(exception)

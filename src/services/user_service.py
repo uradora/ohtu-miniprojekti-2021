@@ -1,3 +1,5 @@
+from flask_login import login_user, logout_user
+
 from repositories.user_repository import (user_repository as default_repository)
 
 class UserService:
@@ -5,10 +7,15 @@ class UserService:
         self._user_repository = user_repository
 
     def login(self, username, password):
-        return self._user_repository.login(username, password)
+        user = self._user_repository.check_login(username, password)
+        if user is not None:
+            login_user(user)
+            return True
+        else:
+            return False
 
     def logout(self):
-        self._user_repository.logout_user()
+        logout_user()
 
     def register(self, username, password):
         if self._user_repository.register(username, password) is not None:
