@@ -13,6 +13,10 @@ class ReadingTipRepository:
         db.session.commit()
         return tip
 
+    def delete_tip(self, id):
+        ReadingTip.query.filter_by(id=id).delete()
+        db.session.commit()
+
     def contains_title(self, title):
         amount = ReadingTip.query.filter(ReadingTip.title == title).count()
         return amount > 0

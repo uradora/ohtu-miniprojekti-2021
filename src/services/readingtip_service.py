@@ -18,4 +18,7 @@ class ReadingTipService:
     def contains_title(self, title):
         return self._readingtip_repository.contains_title(title)
 
+    def delete_tip(self, id):
+        self._readingtip_repository.delete_tip(id)
+
 readingtip_service = ReadingTipService()
