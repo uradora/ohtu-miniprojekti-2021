@@ -1,4 +1,3 @@
-from models.user import User
 from repositories.user_repository import (user_repository as default_repository)
 
 class UserService:
@@ -6,10 +5,7 @@ class UserService:
         self._user_repository = user_repository
 
     def login(self, username, password):
-        if self._user_repository.login(username, password):
-            return True
-        else:
-            return False
+        return self._user_repository.login(username, password)
 
     def logout(self):
         self._user_repository.logout_user()
@@ -17,7 +13,6 @@ class UserService:
     def register(self, username, password):
         if self._user_repository.register(username, password) is not None:
             return True
-        else:
-            return False
+        return False
 
 user_service = UserService()

@@ -1,6 +1,9 @@
 from models.user import User
-from werkzeug.security import check_password_hash, generate_password_hash
 from database import db
+from flask_login import LoginManager
+from flask_login import login_user, logout_user
+
+login = LoginManager()
 
 class UserRepository:
     def __init__(self):
@@ -8,9 +11,10 @@ class UserRepository:
 
     def login(self, username, password):
         user = User.query.filter_by(username = username).first()
-        if user is not None and user.check_password(request.form["password"]):
+        if user is not None and user.check_password(password):
             login_user(user)
-        return True
+            return True
+        return False
 
     def logout(self):
         logout_user()
