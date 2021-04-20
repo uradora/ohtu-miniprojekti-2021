@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
-from login import login
+from login import login_manager
 
 app = Flask(__name__)
 
@@ -22,7 +22,7 @@ else:
 
 
 db.init_app(app)
-login.init_app(app)
+login_manager.init_app(app)
 
 import routes # pylint: disable=unused-import, wrong-import-position
 
