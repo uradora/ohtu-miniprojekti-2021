@@ -1,6 +1,5 @@
 import unittest
 from services.readingtip_service import ReadingTipService
-from repositories.readingtip_repository import ReadingTipRepository
 
 class ReadingTipRepositoryStub:
     def __init__(self):

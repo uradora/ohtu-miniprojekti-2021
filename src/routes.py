@@ -3,7 +3,6 @@ from app import app
 from services.readingtip_service import readingtip_service
 from services.user_service import user_service
 
-
 @app.route("/newtip", methods=["POST"])
 def newtip():
     title = request.form["title"]
@@ -32,7 +31,8 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        if user_service.login(username,password):
+        if user_service.login(username, password):
+            flash("Login successful")
             return redirect("/")
         else:
             flash("Login failed")
@@ -50,7 +50,8 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        if user_service.register(username,password):
+        if user_service.register(username, password):
+            flash("Registration successful, you may now log in")
             return redirect("/")
         else:
             flash("Register failed")

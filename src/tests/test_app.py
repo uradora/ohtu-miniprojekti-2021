@@ -1,8 +1,6 @@
-import os
-from flask import Flask
-import flask
-from database import db
 import pytest
+from flask import Flask
+from database import db
 
 _test_app = Flask(__name__)
 
