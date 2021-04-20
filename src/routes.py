@@ -27,6 +27,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if user_service.login(username, password):
+            flash("Login successful")
             return redirect("/")
         else:
             flash("Login failed")
@@ -45,6 +46,7 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
         if user_service.register(username, password):
+            flash("Registration successful, you may now log in")
             return redirect("/")
         else:
             flash("Register failed")
