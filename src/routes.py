@@ -17,6 +17,11 @@ def newtip():
 def create_tip():
     return render_template("newtip.html")
 
+@app.route("/deletetip/<id>")
+def delete_tip(id):
+    readingtip_service.delete_tip(id)
+    return redirect("/")
+
 @app.route("/")
 def userpage():
     tips=readingtip_service.get_tips()

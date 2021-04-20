@@ -16,3 +16,10 @@ class TestReadingTip(unittest.TestCase):
     def test_contains_title_if_present(self):
         self.repository.create_tip(ReadingTip("Hyvä kirja", "kirjakauppa.fi/123"))
         assert self.repository.contains_title("Hyvä kirja")
+
+    def test_deletes_tip(self):
+        self.repository.create_tip(ReadingTip("Hyvä kirja", "kirjakauppa.fi/123"))
+        tip = self.repository.get_tips()[0]
+        self.repository.delete_tip(tip.id)
+        self.assertEqual(self.repository.get_tips(), [])
+
