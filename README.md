@@ -14,5 +14,5 @@ Coursework for Ohjelmistotuotanto spring 2021 course
 - Testit menevät läpi ja uusin versio läpäisee CI:n
 - Koodityyli on yhtenäistä
 - Luokat ja muuttujat on nimetty järkevästi
-- Luokkakohtainen yksikkötestikattavuus 70%
+- Luokkakohtainen yksikkötestikattavuus 80%
 - Käyttäjän näkökulmasta feature toimii ja on mukava käyttää
