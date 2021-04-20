@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, flash
 from app import app
 from services.readingtip_service import readingtip_service
 from services.user_service import user_service
+from login import (LoginService as login_service) 
 
 @app.route("/newtip", methods=["POST"])
 def newtip():
@@ -9,7 +10,7 @@ def newtip():
     if readingtip_service.contains_title(title):
         flash(f"Tips already contains tip with title {title}")
         return redirect("/newtip")
-    readingtip_service.create_tip(title, request.form["link"])
+    readingtip_service.create_tip(title, request.form["link"], login_service.current_user().get_id())
     return redirect("/")
 
 @app.route("/newtip")
@@ -18,8 +19,14 @@ def create_tip():
 
 @app.route("/deletetip/<id>")
 def delete_tip(id):
-    readingtip_service.delete_tip(id)
-    return redirect("/")
+    user_id = login_service.current_user().get_id()
+    tip_user_id = ReadingTip.query.filter_by(id=id).user_id
+    if user_id == tip_user_id:
+        readingtip_service.delete_tip(id)
+        return redirect("/")
+    else:
+        flash("Delete failed")
+        return redirect("/")
 
 @app.route("/")
 def userpage():

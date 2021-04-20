@@ -8,9 +8,9 @@ class ReadingTipService:
     def get_tips(self):
         return self._readingtip_repository.get_tips()
 
-    def create_tip(self, title, link):
+    def create_tip(self, title, link, user_id):
         tip = self._readingtip_repository.create_tip(
-            ReadingTip(title, link)
+            ReadingTip(title, link, user_id)
         )
 
         return tip
