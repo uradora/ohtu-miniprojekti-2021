@@ -21,6 +21,7 @@ def unload_test_app():
     _test_app_ctx.pop()
 
 def clear_tables():
+    db.session.rollback()
     for table in reversed(db.metadata.sorted_tables):
         db.session.execute(table.delete())
     db.session.commit()
