@@ -6,7 +6,6 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(80), nullable = False, unique = True)
     password_hash = db.Column(db.String())
-    tips = db.relationship("ReadingTip")
 
     def __init__(self, username, password, **kwargs):
         super().__init__(**kwargs)
