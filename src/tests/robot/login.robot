@@ -35,7 +35,3 @@ Main Page Open With Flash
     Main Page Should Be Open
     Page Should Contain  ${text}
 
-Set Username and Password
-    [Arguments]  ${username}  ${password}
-    Input Text  username  ${username}
-    Input Text  password  ${password}
