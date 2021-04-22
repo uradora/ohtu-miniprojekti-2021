@@ -23,11 +23,11 @@ class ReadingTipService:
         readingTipTags = []
         for tag_name in tags:
             if not self._tag_repository.contains_tag(tag_name):
-                print("Does not contain tag")
+                print("NOT IN DB")
                 self._tag_repository.create_tag(
                     Tag(tag_name)
                 )
-            readingTipTags.append(Tag(tag_name))
+            readingTipTags.append(self._tag_repository.get_tag(tag_name))
         tip = self._readingtip_repository.create_tip(
             ReadingTip(title, link, self._login_service.current_user(), readingTipTags)
         )
