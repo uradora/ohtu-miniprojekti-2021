@@ -6,10 +6,12 @@ from services.user_service import user_service
 @app.route("/newtip", methods=["POST"])
 def newtip():
     title = request.form["title"]
+    tags =  request.form["tags"].split(",")
+    strippedTags = [tag.strip() for tag in tags]
     if readingtip_service.contains_title(title):
         flash(f"Tips already contains tip with title {title}")
         return redirect("/newtip")
-    readingtip_service.create_tip(title, request.form["link"])
+    readingtip_service.create_tip(title, request.form["link"], strippedTags)
     return redirect("/")
 
 @app.route("/newtip")
