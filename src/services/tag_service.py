@@ -9,7 +9,7 @@ class TagService:
 
     def get_tags(self):
         if self._login_service.is_authenticated():
-            return self._tag_repository.get_tags()
+            return self._tag_repository.get_tags(self._login_service.current_user())
         else:
             return []
 

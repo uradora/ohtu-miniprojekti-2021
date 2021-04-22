@@ -9,7 +9,7 @@ class TestTag(unittest.TestCase):
 
     def test_create_tag(self):
         self.repository.create_tag(Tag("kirjat"))
-        tags = self.repository.get_tags()
+        tags = self.repository.get_all_tags()
         self.assertEqual(tags[0].name, "kirjat")
 
     def test_contains_tag_if_not_present(self):

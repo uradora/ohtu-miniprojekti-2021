@@ -9,8 +9,11 @@ class ReadingTipRepositoryStub:
         self._tips = tips
         self._id_counter = 1
 
-    def get_tips(self, user):
-        return [t for t in self._tips if t.user == user]
+    def get_tips(self, user, tag):
+        if tag == "all":
+            return [t for t in self._tips if t.user == user]
+        else:
+            return [t for t in self._tips if t.user == user and tag in [tag.name for tag in t.tags]]
 
     def get_tip(self, tip_id):
         for tip in self._tips:
@@ -28,7 +31,7 @@ class ReadingTipRepositoryStub:
         self._tips = [t for t in self._tips if t != tip]
 
     def contains_title(self, user, title):
-        for readingtip in self.get_tips(user):
+        for readingtip in self.get_tips(user, "all"):
             if readingtip.title == title:
                 return True
         return False
@@ -71,10 +74,10 @@ class TestReadingTipService(unittest.TestCase):
     def test_create_adds_to_collection(self):
         self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
         self.service.create_tip("Huono kirja", "kirjakauppa.fi/124", ["kirjat", "maksulliset"])
-        self.assertEqual(self.service.get_tips()[0].title, "Hyvä kirja")
-        self.assertEqual(self.service.get_tips()[1].title, "Huono kirja")
-        self.assertEqual(self.service.get_tips()[0].tags[0].name, "kirjat")
-        self.assertEqual(self.service.get_tips()[0].tags[1].name, "maksulliset")
+        self.assertEqual(self.service.get_tips("all")[0].title, "Hyvä kirja")
+        self.assertEqual(self.service.get_tips("all")[1].title, "Huono kirja")
+        self.assertEqual(self.service.get_tips("all")[0].tags[0].name, "kirjat")
+        self.assertEqual(self.service.get_tips("all")[0].tags[1].name, "maksulliset")
 
     def test_contains_title_if_not_present(self):
         assert not self.service.contains_title("Hyvä kirja")
@@ -97,3 +100,12 @@ class TestReadingTipService(unittest.TestCase):
         assert not self.service.delete_tip(tip.id)
         self.login.login_user(other_user)
         assert self.service.contains_title("Hyvä kirja")
+
+    def test_can_get_tips_based_on_tags(self):
+        self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["hyvä"])
+        self.service.create_tip("Huono kirja", "kirjakauppa.fi/124", ["huono"])
+        self.assertEqual(len(self.service.get_tips("all")), 2)
+        self.assertEqual(len(self.service.get_tips("hyvä")), 1)
+
+
+

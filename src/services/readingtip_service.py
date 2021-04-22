@@ -12,9 +12,9 @@ class ReadingTipService:
         self._login_service = login_service
         self._tag_repository = tag_repository
 
-    def get_tips(self):
+    def get_tips(self, tag):
         if self._login_service.is_authenticated():
-            return self._readingtip_repository.get_tips(self._login_service.current_user())
+            return self._readingtip_repository.get_tips(self._login_service.current_user(), tag)
         else:
             return []
 
@@ -23,7 +23,6 @@ class ReadingTipService:
         readingTipTags = []
         for tag_name in tags:
             if not self._tag_repository.contains_tag(tag_name):
-                print("NOT IN DB")
                 self._tag_repository.create_tag(
                     Tag(tag_name)
                 )

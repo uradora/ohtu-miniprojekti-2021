@@ -8,8 +8,11 @@ class TagRepository:
     def get_tag(self, name):
         return Tag.query.filter_by(name=name).first()
 
-    def get_tags(self):
+    def get_all_tags(self):
         return Tag.query.all()
+
+    def get_tags(self, user):
+        return Tag.query.filter(Tag.tips.any(user=user)).all()
 
     def create_tag(self, tag):
         db.session.add(tag)

@@ -5,8 +5,11 @@ class ReadingTipRepository:
     def __init__(self):
         pass
 
-    def get_tips(self, user):
-        return ReadingTip.query.filter_by(user=user).all()
+    def get_tips(self, user, tag):
+        if tag == "all":
+            return ReadingTip.query.filter_by(user=user).all()
+        else:
+            return ReadingTip.query.filter_by(user=user).filter(ReadingTip.tags.any(name=tag)).all()
 
     def create_tip(self, tip):
         db.session.add(tip)

@@ -29,7 +29,10 @@ def delete_tip(id):
 
 @app.route("/")
 def userpage():
-    tips=readingtip_service.get_tips()
+    tag=request.args.get("tag")
+    if(tag == None):
+        tag = "all"
+    tips=readingtip_service.get_tips(tag)
     tags =tag_service.get_tags()
     return render_template("userpage.html", tips=tips, tags=tags)
 
