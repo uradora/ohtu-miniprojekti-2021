@@ -19,6 +19,10 @@ def newtip():
 def create_tip():
     return render_template("newtip.html")
 
+@app.route("/changetip")
+def change_tip():
+    return render_template("changetip.html")
+
 @app.route("/deletetip/<id>")
 def delete_tip(id):
     if readingtip_service.delete_tip(id):

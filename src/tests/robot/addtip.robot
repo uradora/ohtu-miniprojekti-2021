@@ -18,7 +18,7 @@ Adding A Tip With The Same Name
     Adding Should Fail With Message  Tips already contains tip with title testi
 
 Remove Tip
-    Click Button  Remove
+    Click Link  Remove
     Page Should Not Contain  www.testi.fi
 
 *** Keywords ***

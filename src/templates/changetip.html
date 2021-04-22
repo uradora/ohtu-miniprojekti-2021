@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %} Edit tip {% endblock %}
+
+{% block body %}
+<div class="page-header"> 
+    <h2>Edit tip</h2>
+</div>
+
+<form action="/newtip" method="POST">
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="category" class="col-sm-2 col-form-label">Title</label>
+            <input type="text" class="form-control" name="title" id="exampleInputEmail1">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="category" class="col-sm-2 col-form-label">Link</label>
+            <input type="text" class="form-control" name="link" id="exampleInputEmail1">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Edit tip</button>
+</form>
+{% endblock %}
