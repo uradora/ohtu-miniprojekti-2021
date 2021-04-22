@@ -33,28 +33,17 @@ class ReadingTipRepositoryStub:
                 return True
         return False
 
-class TagRepository:
-    def __init__(self):
-        pass
-
-
-    def create_tag(self, tag):
-        db.session.add(tag)
-        db.session.commit()
-        return tag
-
-    
-    def contains_tag(self, name):
-        amount = Tag.query.filter_by(name=name).count()
-        return amount > 0
-
-tag_repository = TagRepository()
-
 class TagRepositoryStub:
     def __init__(self):
         tags = []
         self._tags = tags
         self._id_counter = 1
+
+    def get_tag(self, name):
+        for tag in self._tags:
+            if tag.name == name:
+                return tag
+        return None
 
     def create_tag(self, tag):
         tag.id = self._id_counter

@@ -6,6 +6,7 @@
 
 <div class="table-responsive table-sm">
     <select name="tag_select">
+        <option value="{{ all }}">all</option>
         {% for tag in tags %}
         <option value="{{ tag.name }}">{{ tag.name }}</option>
         {% endfor %}
