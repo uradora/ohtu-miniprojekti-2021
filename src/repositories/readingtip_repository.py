@@ -5,20 +5,23 @@ class ReadingTipRepository:
     def __init__(self):
         pass
 
-    def get_tips(self):
-        return ReadingTip.query.all()
+    def get_tips(self, user):
+        return ReadingTip.query.filter_by(user=user).all()
 
     def create_tip(self, tip):
         db.session.add(tip)
         db.session.commit()
         return tip
 
-    def delete_tip(self, id):
-        ReadingTip.query.filter_by(id=id).delete()
+    def get_tip(self, tip_id):
+        return ReadingTip.query.get(tip_id)
+
+    def delete_tip(self, tip):
+        db.session.delete(tip)
         db.session.commit()
 
-    def contains_title(self, title):
-        amount = ReadingTip.query.filter(ReadingTip.title == title).count()
+    def contains_title(self, user, title):
+        amount = ReadingTip.query.filter_by(user=user, title=title).count()
         return amount > 0
 
 readingtip_repository = ReadingTipRepository()

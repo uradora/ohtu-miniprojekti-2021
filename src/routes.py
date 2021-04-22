@@ -18,8 +18,11 @@ def create_tip():
 
 @app.route("/deletetip/<id>")
 def delete_tip(id):
-    readingtip_service.delete_tip(id)
-    return redirect("/")
+    if readingtip_service.delete_tip(id):
+        return redirect("/")
+    else:
+        flash("Delete failed")
+        return redirect("/")
 
 @app.route("/")
 def userpage():

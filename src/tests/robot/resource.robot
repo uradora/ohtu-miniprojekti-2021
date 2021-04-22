@@ -5,7 +5,7 @@ Library  SeleniumLibrary
 *** Variables ***
 ${SERVER}  localhost:5000
 ${BROWSER}  %{BROWSER=chrome}
-${DELAY}  %{DELAY=0.2 seconds}
+${DELAY}  %{DELAY=0.1 seconds}
 ${HOME URL}  http://${SERVER}
 
 
@@ -23,3 +23,18 @@ Main Page Should Be Open
 
 Tip Form Page Should Be Open 
     Title Should Be  Add new tip - Reading Tips
+
+Set Username and Password
+    [Arguments]  ${username}  ${password}
+    Input Text  username  ${username}
+    Input Text  password  ${password}
+
+Create and Login Default User
+    Go To Main Page
+    Click Link  Register
+    Set Username and Password  default_user  default_password
+    Click Button  Register
+    Click Link  Login
+    Set Username and Password  default_user  default_password
+    Click Button  Login
+

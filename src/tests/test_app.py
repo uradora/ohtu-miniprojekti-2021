@@ -1,3 +1,4 @@
+import tempfile
 import pytest
 from flask import Flask
 from database import db
@@ -7,7 +8,8 @@ _test_app = Flask(__name__)
 _test_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 _test_app.secret_key = "test"
-_test_app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tips-test.db"
+test_db_file = tempfile.NamedTemporaryFile()
+_test_app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{test_db_file.name}"
 _test_app.config["SQLALCHEMY_ECHO"] = True
 
 _test_app_ctx = _test_app.app_context()
@@ -21,6 +23,7 @@ def unload_test_app():
     _test_app_ctx.pop()
 
 def clear_tables():
+    db.session.rollback()
     for table in reversed(db.metadata.sorted_tables):
         db.session.execute(table.delete())
     db.session.commit()

@@ -10,7 +10,7 @@ class LoginService:
         logout_user()
 
     def is_authenticated(self):
-        return current_user.is_authenticated()
+        return current_user.is_authenticated
 
     def current_user(self):
         return current_user
