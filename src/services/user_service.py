@@ -22,4 +22,7 @@ class UserService:
             return True
         return False
 
+    def is_authenticated(self):
+        return self._login_service.is_authenticated()
+
 user_service = UserService()

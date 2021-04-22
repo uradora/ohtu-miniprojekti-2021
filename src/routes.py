@@ -26,8 +26,11 @@ def delete_tip(id):
 
 @app.route("/")
 def userpage():
-    tips=readingtip_service.get_tips()
-    return render_template("userpage.html", tips=tips)
+    if user_service.is_authenticated():
+        tips=readingtip_service.get_tips()
+        return render_template("userpage.html", tips=tips)
+    else:
+        return render_template("login.html")
 
 @app.route("/login", methods=["GET","POST"])
 def login():
