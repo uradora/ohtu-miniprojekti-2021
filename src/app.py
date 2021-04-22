@@ -28,7 +28,6 @@ import routes # pylint: disable=unused-import, wrong-import-position
 
 with app.app_context():
     try:
-        db.drop_all()
         db.create_all()
     except SQLAlchemyError as exception:
         print(exception)
