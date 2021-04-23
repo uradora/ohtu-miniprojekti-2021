@@ -3,26 +3,27 @@
 {% block title %} Edit tip {% endblock %}
 
 {% block body %}
-<div class="page-header"> 
-    <h2>Edit tip</h2>
-</div>
 
-<form action="/newtip" method="POST">
+<h2 class="mb-3">Edit tip</h2>
+<p class="mb-0">Current title: &nbsp {{tip.title}}</p>
+<p>Current link: &nbsp {{tip.link}}</p>
+
+<form action="/changetip/{{tip.id}}" method="POST">
 
     <div class="form-row">
         <div class="form-group col-md-3">
-            <label for="category" class="col-sm-2 col-form-label">Title</label>
-            <input type="text" class="form-control" name="title" id="exampleInputEmail1">
+            <label for="category" class="col-form-label">Title</label>
+            <input type="text" class="form-control" placeholder="Insert new title..." name="edited_title" id="title">
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-3">
             <label for="category" class="col-sm-2 col-form-label">Link</label>
-            <input type="text" class="form-control" name="link" id="exampleInputEmail1">
+            <input type="text" class="form-control" placeholder="Insert new link..." name="edited_link" id="link">
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Edit tip</button>
+    <button type="submit" class="btn btn-primary">Submit changes</button>
 </form>
 {% endblock %}

@@ -19,9 +19,31 @@ def newtip():
 def create_tip():
     return render_template("newtip.html")
 
-@app.route("/changetip")
-def change_tip():
-    return render_template("changetip.html")
+@app.route("/changetip/<id>", methods=["GET","POST"])
+def change_tip(id):
+    if request.method == "POST":
+        edited_title = request.form["edited_title"]
+        edited_link = request.form["edited_link"]
+        tip = readingtip_service.get_tip(id)
+        
+        if readingtip_service.contains_title(edited_title) and edited_title != tip.title:
+            flash(f"Tips already contains tip with title {edited_title}")
+            return redirect("/")
+        
+        if not edited_title or not edited_link:
+            flash(f"Tip editing failed: title or link cannot be empty")
+            return redirect("/")
+
+        if readingtip_service.change_tip(tip, edited_title, edited_link):
+            flash("Tip edited successfully")
+            return redirect("/")
+        else:
+            flash("Tip editing failed")
+            return redirect("/")
+
+    if request.method == "GET":
+        tip = readingtip_service.get_tip(id)
+        return render_template("changetip.html", tip=tip)
 
 @app.route("/deletetip/<id>")
 def delete_tip(id):

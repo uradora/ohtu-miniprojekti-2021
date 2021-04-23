@@ -18,6 +18,15 @@ class ReadingTipService:
         else:
             return []
 
+    def change_tip(self, tip_object, title, link):
+        assert self._login_service.is_authenticated()
+        if tip_object.user == self._login_service.current_user():
+            if not link.startswith("http://") and not link.startswith("https://"):
+                link = "http://" + link
+            self._readingtip_repository.update_tip(tip_object.id, title, link)
+            return True
+        return False
+
     def create_tip(self, title, link, tags):
         assert self._login_service.is_authenticated()
         readingTipTags = []
@@ -45,5 +54,11 @@ class ReadingTipService:
             return True
         else:
             return False
+
+    def get_tip(self, tip_id):
+        assert self._login_service.is_authenticated()
+        tip = self._readingtip_repository.get_tip(tip_id)
+        if tip.user == self._login_service.current_user():
+            return self._readingtip_repository.get_tip(tip_id)
 
 readingtip_service = ReadingTipService()
