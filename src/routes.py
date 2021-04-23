@@ -57,6 +57,14 @@ def delete_tip(id):
         flash("Delete failed")
         return redirect("/")
 
+@app.route("/readtip/<id>")
+def read_tip(id):
+    if readingtip_service.read_tip(id):
+        return redirect("/")
+    else:
+        flash("Marking tip as read failed")
+        return redirect("/")
+
 @app.route("/")
 def userpage():
     if user_service.is_authenticated():
