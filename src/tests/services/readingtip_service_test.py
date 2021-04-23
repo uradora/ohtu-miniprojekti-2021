@@ -32,6 +32,12 @@ class ReadingTipRepositoryStub:
             if readingtip.title == title:
                 return True
         return False
+    
+    def update_tip(self, tip_id, title, link):
+        for tip in self._tips:
+            if tip.id == tip_id:
+                tip.title = title
+                tip.link = link
 
 class TagRepositoryStub:
     def __init__(self):
@@ -97,3 +103,20 @@ class TestReadingTipService(unittest.TestCase):
         assert not self.service.delete_tip(tip.id)
         self.login.login_user(other_user)
         assert self.service.contains_title("Hyvä kirja")
+    
+    def test_can_change_own_tip(self):
+        tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123")
+        assert self.service.change_tip(tip, "Muutettu kirja", "kirjakauppa.fi/123")
+    
+    def test_cannot_change_others_tip(self):
+        tip = self.service.create_tip("Maijan kirja", "kirjakauppa.fi/123")
+        other_user = User("mikko", "yah2Oozo")
+        other_user.id = 2
+        self.login.login_user(other_user)
+        assert not self.service.change_tip(tip, "Mikon kirja", "kirjakauppa.fi/123")
+    
+    def test_can_get_one_tip(self):
+        self.service.create_tip("Eka kirja", "ekakauppa.fi/123")
+        self.service.create_tip("Toka kirja", "tokakauppa.fi/123")
+        tip = self.service.get_tip(2)
+        assert tip.title == "Toka kirja"
