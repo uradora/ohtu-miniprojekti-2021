@@ -31,7 +31,7 @@ class ReadingTipRepository:
     def contains_title(self, user, title):
         amount = ReadingTip.query.filter_by(user=user, title=title).count()
         return amount > 0
-    
+
     def read_tip(self, tip, date):
         ReadingTip.query.filter_by(id=tip.id).update({"read":date})
         db.session.commit()

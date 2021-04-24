@@ -1,3 +1,4 @@
+from datetime import datetime
 from models.readingtip import ReadingTip
 from models.tag import Tag
 from login import (login_service as default_login_service)
@@ -62,7 +63,7 @@ class ReadingTipService:
             return True
         else:
             return False
-    
+
     def read_tip(self, tip_id):
         assert self._login_service.is_authenticated()
         tip = self._readingtip_repository.get_tip(tip_id)
