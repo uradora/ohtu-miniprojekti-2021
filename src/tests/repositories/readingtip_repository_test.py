@@ -55,3 +55,10 @@ class TestReadingTip(unittest.TestCase):
         self.repository.create_tip(ReadingTip("Uusi kirja", "kirjakauppa.fi/123", self.user, tags))
         tip = self.repository.get_tip(1)
         self.assertEqual(tip.title, "Uusi kirja")
+
+    def test_marks_tip_as_read(self):
+        tags = [Tag("kirjat"), Tag("maksulliset")]
+        self.repository.create_tip(ReadingTip("Hyvä kirja", "kirjakauppa.fi/123", self.user, tags))
+        assert self.repository.get_tips(self.user)[0].read is None
+        self.repository.read_tip(self.repository.get_tips(self.user)[0], "2021")
+        assert self.repository.get_tips(self.user)[0].read is not None
