@@ -5,7 +5,7 @@ class ReadingTipRepository:
     def __init__(self):
         pass
 
-    def get_tips(self, user, tag):
+    def get_tips(self, user, tag="all"):
         if tag == "all":
             return ReadingTip.query.filter_by(user=user).all()
         else:

@@ -8,7 +8,7 @@ from services.tag_service import tag_service
 def newtip():
     title = request.form["title"]
     tags =  request.form["tags"].split(",")
-    strippedTags = [tag.strip() for tag in tags]
+    strippedTags = [tag.strip() for tag in tags if tag.strip() != ""]
     if readingtip_service.contains_title(title):
         flash(f"Tips already contains tip with title {title}")
         return redirect("/newtip")
