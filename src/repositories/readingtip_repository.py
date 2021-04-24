@@ -9,7 +9,7 @@ class ReadingTipRepository:
         return ReadingTip.query.filter_by(user=user).all()
 
     def update_tip(self, tip_id, title, link):
-        db.session.query(ReadingTip).filter_by(id=tip_id).update({"title": title, "link": link})
+        ReadingTip.query.filter_by(id=tip_id).update({"title": title, "link": link})
         db.session.commit()
 
     def create_tip(self, tip):
