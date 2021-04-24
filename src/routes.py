@@ -57,7 +57,7 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
         if user_service.register(username, password):
-            flash("Registration successful, you may now log in")
+            flash("Registration successful, you are now logged in")
             return redirect("/")
         else:
             flash("Register failed")
