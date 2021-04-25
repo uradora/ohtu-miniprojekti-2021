@@ -19,7 +19,10 @@ class UserService:
 
     def register(self, username, password):
         if self._user_repository.register(username, password) is not None:
-            return True
+            return self.login(username, password)
         return False
+
+    def is_authenticated(self):
+        return self._login_service.is_authenticated()
 
 user_service = UserService()

@@ -29,9 +29,12 @@ def delete_tip(id):
 
 @app.route("/")
 def userpage():
-    tips=readingtip_service.get_tips()
-    tags =tag_service.get_tags()
-    return render_template("userpage.html", tips=tips, tags=tags)
+    if user_service.is_authenticated():
+       tips=readingtip_service.get_tips()
+       tags =tag_service.get_tags()
+       return render_template("userpage.html", tips=tips, tags=tags)
+    else:
+        return render_template("login.html")
 
 @app.route("/login", methods=["GET","POST"])
 def login():
@@ -58,7 +61,7 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
         if user_service.register(username, password):
-            flash("Registration successful, you may now log in")
+            flash("Registration successful, you are now logged in")
             return redirect("/")
         else:
             flash("Register failed")
