@@ -31,6 +31,7 @@ class TestUserService(unittest.TestCase):
         self.login = LoginServiceStub()
         self.service = UserService(self.repository, self.login)
         self.service.register("maija", "yue3AeV4")
+        self.service.logout()
 
     def test_register_new_username(self):
         result = self.service.register("mikko", "yue3AeV4")
