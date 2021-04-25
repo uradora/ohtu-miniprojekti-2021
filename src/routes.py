@@ -33,7 +33,7 @@ def userpage():
         tag=request.args.get("tag")
         if(tag == None):
             tag = "all"
-        tips=readingtip_service.get_tips()
+        tips=readingtip_service.get_tips(tag)
         tags =tag_service.get_tags()
         return render_template("userpage.html", tips=tips, tags=tags)
     else:
