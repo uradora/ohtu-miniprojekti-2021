@@ -33,31 +33,58 @@ class ReadingTipRepositoryStub:
                 return True
         return False
 
+class TagRepositoryStub:
+    def __init__(self):
+        tags = []
+        self._tags = tags
+        self._id_counter = 1
+
+    def get_tag(self, name):
+        for tag in self._tags:
+            if tag.name == name:
+                return tag
+        return None
+
+    def create_tag(self, tag):
+        tag.id = self._id_counter
+        self._tags.append(tag)
+        return tag
+
+    def contains_tag(self, name):
+        for tag in self._tags:
+            if tag.name == name:
+                return True
+        return False
+
+
 
 class TestReadingTipService(unittest.TestCase):
     def setUp(self):
         self.repository = ReadingTipRepositoryStub()
+        self.tag_repository = TagRepositoryStub()
         self.login = LoginServiceStub()
-        self.service = ReadingTipService(self.repository, self.login)
+        self.service = ReadingTipService(self.repository, self.login,self.tag_repository)
         self.user = User("maija", "yah2Oozo")
         self.user.id = 1
         self.login.login_user(self.user)
 
     def test_create_adds_to_collection(self):
-        self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123")
-        self.service.create_tip("Huono kirja", "kirjakauppa.fi/124")
+        self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
+        self.service.create_tip("Huono kirja", "kirjakauppa.fi/124", ["kirjat", "maksulliset"])
         self.assertEqual(self.service.get_tips()[0].title, "Hyvä kirja")
         self.assertEqual(self.service.get_tips()[1].title, "Huono kirja")
+        self.assertEqual(self.service.get_tips()[0].tags[0].name, "kirjat")
+        self.assertEqual(self.service.get_tips()[0].tags[1].name, "maksulliset")
 
     def test_contains_title_if_not_present(self):
         assert not self.service.contains_title("Hyvä kirja")
 
     def test_contains_title_if_present(self):
-        self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123")
+        self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
         assert self.service.contains_title("Hyvä kirja")
 
     def test_can_delete_own_tip(self):
-        tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123")
+        tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
         assert self.service.delete_tip(tip.id)
         assert not self.service.contains_title("Hyvä kirja")
 
@@ -65,7 +92,7 @@ class TestReadingTipService(unittest.TestCase):
         other_user = User("mikko", "yah2Oozo")
         other_user.id = 2
         self.login.login_user(other_user)
-        tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123")
+        tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
         self.login.login_user(self.user)
         assert not self.service.delete_tip(tip.id)
         self.login.login_user(other_user)
