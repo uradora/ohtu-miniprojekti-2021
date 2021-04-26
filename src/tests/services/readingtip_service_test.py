@@ -157,3 +157,8 @@ class TestReadingTipService(unittest.TestCase):
         other_user.id = 2
         self.login.login_user(other_user)
         assert not self.service.read_tip(tip.id)
+
+    def test_can_get_tag_names_from_own_tip(self):
+        tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
+        self.assertEqual(self.service.get_tag_names(tip), ["kirjat", "maksulliset"])
+
