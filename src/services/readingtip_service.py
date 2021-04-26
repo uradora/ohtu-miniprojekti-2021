@@ -18,26 +18,33 @@ class ReadingTipService:
         else:
             return []
 
-    def change_tip(self, tip_object, title, link):
+    def change_tip(self, tip_object, title, link, tags):
         assert self._login_service.is_authenticated()
         if tip_object.user == self._login_service.current_user():
             if not link.startswith("http://") and not link.startswith("https://"):
                 link = "http://" + link
-            self._readingtip_repository.update_tip(tip_object.id, title, link)
+            tag_objects = []
+            for tag_name in tags:
+                if not self._tag_repository.contains_tag(tag_name):
+                    self._tag_repository.create_tag(
+                        Tag(tag_name)
+                    )
+                tag_objects.append(self._tag_repository.get_tag(tag_name))
+            self._readingtip_repository.update_tip(tip_object.id, title, link, tag_objects)
             return True
         return False
 
     def create_tip(self, title, link, tags):
         assert self._login_service.is_authenticated()
-        readingTipTags = []
+        tag_objects = []
         for tag_name in tags:
             if not self._tag_repository.contains_tag(tag_name):
                 self._tag_repository.create_tag(
                     Tag(tag_name)
                 )
-            readingTipTags.append(self._tag_repository.get_tag(tag_name))
+            tag_objects.append(self._tag_repository.get_tag(tag_name))
         tip = self._readingtip_repository.create_tip(
-            ReadingTip(title, link, self._login_service.current_user(), readingTipTags)
+            ReadingTip(title, link, self._login_service.current_user(), tag_objects)
         )
 
         return tip
@@ -60,5 +67,8 @@ class ReadingTipService:
         tip = self._readingtip_repository.get_tip(tip_id)
         if tip.user == self._login_service.current_user():
             return self._readingtip_repository.get_tip(tip_id)
+
+    def get_tag_names(self, tip):
+        return [tag.name for tag in tip.tags]
 
 readingtip_service = ReadingTipService()

@@ -8,8 +8,12 @@ class ReadingTipRepository:
     def get_tips(self, user):
         return ReadingTip.query.filter_by(user=user).all()
 
-    def update_tip(self, tip_id, title, link):
-        ReadingTip.query.filter_by(id=tip_id).update({"title": title, "link": link})
+    def update_tip(self, tip_id, title, link, tags):
+        tip = self.get_tip(tip_id)
+        print(tags)
+        tip.title = title
+        tip.link = link
+        tip.tags = tags
         db.session.commit()
 
     def create_tip(self, tip):

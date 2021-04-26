@@ -24,17 +24,20 @@ def change_tip(id):
     if request.method == "POST":
         edited_title = request.form["edited_title"]
         edited_link = request.form["edited_link"]
+        tags = request.form["edited_tags"].split(",")
+        strippedTags = [tag.strip() for tag in tags if tag.strip() != ""]
+
         tip = readingtip_service.get_tip(id)
-        
+
         if readingtip_service.contains_title(edited_title) and edited_title != tip.title:
             flash(f"Tips already contains tip with title {edited_title}")
             return redirect("/")
-        
+
         if not edited_title or not edited_link:
             flash(f"Tip editing failed: title or link cannot be empty")
             return redirect("/")
 
-        if readingtip_service.change_tip(tip, edited_title, edited_link):
+        if readingtip_service.change_tip(tip, edited_title, edited_link, strippedTags):
             flash("Tip edited successfully")
             return redirect("/")
         else:
@@ -43,7 +46,8 @@ def change_tip(id):
 
     if request.method == "GET":
         tip = readingtip_service.get_tip(id)
-        return render_template("changetip.html", tip=tip)
+        tags = ", ".join(readingtip_service.get_tag_names(tip))
+        return render_template("changetip.html", tip=tip, tags=tags)
 
 @app.route("/deletetip/<id>")
 def delete_tip(id):
