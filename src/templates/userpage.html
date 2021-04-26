@@ -20,6 +20,7 @@
             <tr>
                 <th scope="col">Title</th>
                 <th scope="col">Link</th>
+                <th scope="col">Read date</th>
             </tr>
         </thead>
 
@@ -28,7 +29,16 @@
             <tr>
                 <td colspan="1">{{ tip.title }}</td>
                 <td colspan="1"> <a href="{{ tip.link }}">{{ tip.link }}</a> </td>
-                <td colspan="1"><a href="/deletetip/{{ tip.id}}"><button class="btn btn-primary">Remove</button></a></td>
+                <td colspan="1">{% if tip.read %} {{ tip.read }} {% endif %}</td>
+                <td colspan="1">
+                    <a href="/deletetip/{{tip.id}}" class="btn btn-outline-primary">Remove</a>
+                </td>
+                <td colspan="1">
+                    <a href="/changetip/{{tip.id}}" class="btn btn-outline-primary">Edit</a>
+                </td>
+                <td colspan="1">
+                    <a href="/readtip/{{tip.id}}" class="btn btn-outline-primary">Mark as read</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

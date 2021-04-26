@@ -30,11 +30,23 @@ class ReadingTipRepositoryStub:
     def delete_tip(self, tip):
         self._tips = [t for t in self._tips if t != tip]
 
+    def read_tip(self, tip_obj, date):
+        for tip in self._tips:
+            if tip.id == tip_obj.id:
+                tip.read = date
+
     def contains_title(self, user, title):
         for readingtip in self.get_tips(user, "all"):
             if readingtip.title == title:
                 return True
         return False
+
+    def update_tip(self, tip_id, title, link, tags):
+        for tip in self._tips:
+            if tip.id == tip_id:
+                tip.title = title
+                tip.link = link
+                tip.tags = tags
 
 class TagRepositoryStub:
     def __init__(self):
@@ -66,7 +78,7 @@ class TestReadingTipService(unittest.TestCase):
         self.repository = ReadingTipRepositoryStub()
         self.tag_repository = TagRepositoryStub()
         self.login = LoginServiceStub()
-        self.service = ReadingTipService(self.repository, self.login,self.tag_repository)
+        self.service = ReadingTipService(self.repository, self.login, self.tag_repository)
         self.user = User("maija", "yah2Oozo")
         self.user.id = 1
         self.login.login_user(self.user)
@@ -109,3 +121,31 @@ class TestReadingTipService(unittest.TestCase):
 
 
 
+    def test_can_change_own_tip(self):
+        tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
+        assert self.service.change_tip(tip, "Muutettu kirja", "kirjakauppa.fi/123", ["kirjat"])
+
+    def test_cannot_change_others_tip(self):
+        tip = self.service.create_tip("Maijan kirja", "kirjakauppa.fi/123", ["kirjat"])
+        other_user = User("mikko", "yah2Oozo")
+        other_user.id = 2
+        self.login.login_user(other_user)
+        assert not self.service.change_tip(tip, "Mikon kirja", "kirjakauppa.fi/123", ["maksulliset"])
+
+    def test_can_get_one_tip(self):
+        self.service.create_tip("Eka kirja", "ekakauppa.fi/123", ["kirjat"])
+        self.service.create_tip("Toka kirja", "tokakauppa.fi/123", ["maksulliset"])
+        tip = self.service.get_tip(2)
+        assert tip.title == "Toka kirja"
+
+    def test_can_read_own_tip(self):
+        tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
+        assert self.service.read_tip(tip.id)
+        assert self.service.get_tips()[0].read is not None
+
+    def test_cannot_read_others_tip(self):
+        tip = self.service.create_tip("Maijan kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
+        other_user = User("mikko", "yah2Oozo")
+        other_user.id = 2
+        self.login.login_user(other_user)
+        assert not self.service.read_tip(tip.id)

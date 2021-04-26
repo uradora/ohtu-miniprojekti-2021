@@ -9,7 +9,6 @@ class TestReadingTip(unittest.TestCase):
         self.user_repository = UserRepository()
         self.user = self.user_repository.register("maija", "Tiothee6")
         self.repository = ReadingTipRepository()
-        
 
     def test_create_tip(self):
         tags = [Tag("kirjat"), Tag("maksulliset")]
@@ -50,5 +49,26 @@ class TestReadingTip(unittest.TestCase):
         self.repository.create_tip(ReadingTip("Huono kirja", "kirjakauppa.fi/123", self.user, secondTags))
         self.assertEqual(len(self.repository.get_tips(self.user, "all")), 2)
         self.assertEqual(len(self.repository.get_tips(self.user, "Hyvä")), 1)
+
+    def test_update_tip(self):
+        tags = [Tag("kirjat"), Tag("maksulliset")]
+        self.repository.create_tip(ReadingTip("Hyvä kirja", "kirjakauppa.fi/123", self.user, tags))
+        tags.append(Tag("uusi"))
+        self.repository.update_tip(1, "Muutettu kirja", "kirjakauppa.fi/123", tags)
+        self.assertEqual(self.repository.get_tips(self.user)[0].title, "Muutettu kirja")
+        self.assertEqual(self.repository.get_tips(self.user)[0].tags[2].name, "uusi")
+
+    def test_get_tip(self):
+        tags = [Tag("kirjat"), Tag("maksulliset")]
+        self.repository.create_tip(ReadingTip("Uusi kirja", "kirjakauppa.fi/123", self.user, tags))
+        tip = self.repository.get_tip(1)
+        self.assertEqual(tip.title, "Uusi kirja")
+
+    def test_marks_tip_as_read(self):
+        tags = [Tag("kirjat"), Tag("maksulliset")]
+        self.repository.create_tip(ReadingTip("Hyvä kirja", "kirjakauppa.fi/123", self.user, tags))
+        assert self.repository.get_tips(self.user)[0].read is None
+        self.repository.read_tip(self.repository.get_tips(self.user)[0], "2021")
+        assert self.repository.get_tips(self.user)[0].read is not None
 
 

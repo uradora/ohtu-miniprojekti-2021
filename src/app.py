@@ -19,6 +19,8 @@ else:
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tips.db"
     #prints SQL-queries
     app.config["SQLALCHEMY_ECHO"] = True
+    #browser reload will show template modifications
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 
 db.init_app(app)

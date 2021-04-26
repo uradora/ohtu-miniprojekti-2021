@@ -12,6 +12,7 @@ class ReadingTip(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(80), nullable = False)
     link = db.Column(db.String(80), nullable = False)
+    read = db.Column(db.String(20), nullable = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('tips', lazy=True))
     tags = db.relationship("Tag", secondary = tips_to_tags_table, backref=db.backref("tips"))
