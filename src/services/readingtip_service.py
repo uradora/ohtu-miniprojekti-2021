@@ -14,7 +14,7 @@ class ReadingTipService:
         self._login_service = login_service
         self._tag_repository = tag_repository
 
-    def get_tips(self, tag):
+    def get_tips(self, tag="all"):
         if self._login_service.is_authenticated():
             return self._readingtip_repository.get_tips(self._login_service.current_user(), tag)
         else:
