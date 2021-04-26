@@ -1,0 +1,69 @@
+==============================================================================
+Src                                                                           
+==============================================================================
+Src.Tests                                                                     
+==============================================================================
+Src.Tests.Robot                                                               
+==============================================================================
+Src.Tests.Robot.Addtip                                                        
+==============================================================================
+Add A Tip Succesfully                                                 | FAIL |
+Parent suite setup failed:
+No keyword with name 'Open Browser' found.
+------------------------------------------------------------------------------
+Adding A Tip With The Same Name                                       | FAIL |
+Parent suite setup failed:
+No keyword with name 'Open Browser' found.
+------------------------------------------------------------------------------
+Remove Tip                                                            | FAIL |
+Parent suite setup failed:
+No keyword with name 'Open Browser' found.
+------------------------------------------------------------------------------
+Src.Tests.Robot.Addtip                                                | FAIL |
+Suite setup failed:
+No keyword with name 'Open Browser' found.
+
+Also suite teardown failed:
+No keyword with name 'Close Browser' found.
+
+3 tests, 0 passed, 3 failed
+==============================================================================
+Src.Tests.Robot.Login                                                         
+==============================================================================
+Register Successfully                                                 | FAIL |
+Parent suite setup failed:
+No keyword with name 'Open Browser' found.
+------------------------------------------------------------------------------
+Login Successfully                                                    | FAIL |
+Parent suite setup failed:
+No keyword with name 'Open Browser' found.
+------------------------------------------------------------------------------
+Login Incorrect Password                                              | FAIL |
+Parent suite setup failed:
+No keyword with name 'Open Browser' found.
+------------------------------------------------------------------------------
+Register Existing Username                                            | FAIL |
+Parent suite setup failed:
+No keyword with name 'Open Browser' found.
+------------------------------------------------------------------------------
+Src.Tests.Robot.Login                                                 | FAIL |
+Suite setup failed:
+No keyword with name 'Open Browser' found.
+
+Also suite teardown failed:
+No keyword with name 'Close Browser' found.
+
+4 tests, 0 passed, 4 failed
+==============================================================================
+Src.Tests.Robot                                                       | FAIL |
+7 tests, 0 passed, 7 failed
+==============================================================================
+Src.Tests                                                             | FAIL |
+7 tests, 0 passed, 7 failed
+==============================================================================
+Src                                                                   | FAIL |
+7 tests, 0 passed, 7 failed
+==============================================================================
+Output:  /home/ollpu/git/ohtu-miniprojekti-2021/src/output.xml
+Log:     /home/ollpu/git/ohtu-miniprojekti-2021/src/log.html
+Report:  /home/ollpu/git/ohtu-miniprojekti-2021/src/report.html

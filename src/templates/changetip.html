@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %} Edit tip {% endblock %}
+
+{% block body %}
+
+<h2 class="mb-3">Edit tip</h2>
+<p class="mb-0">Current title: &nbsp {{tip.title}}</p>
+<p>Current link: &nbsp {{tip.link}}</p>
+
+<form action="/changetip/{{tip.id}}" method="POST">
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="title" class="col-form-label">Title</label>
+            <input type="text" class="form-control" value="{{tip.title}}" name="edited_title" id="title">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="link" class="col-sm-2 col-form-label">Link</label>
+            <input type="text" class="form-control" value="{{tip.link}}" name="edited_link" id="link">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="tags" class="col-form-label">Tags</label>
+            <input type="text" class="form-control" value="{{tags}}" name="edited_tags" id="tags">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit changes</button>
+</form>
+{% endblock %}
