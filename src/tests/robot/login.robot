@@ -17,6 +17,15 @@ Login Successfully
     Click Button  Login
     Main Page Open With Flash  Login successful
 
+User Can Only See Own Tips
+    Click Link  Register
+    Set Username and Password  new_user  new_password
+    Click Button  Register
+    Click Link  Login
+    Set Username and Password  new_user  new_password
+    Click Button  Login
+    Page Should Not Contain  www.testi.fi
+    
 Login Incorrect Password
     Click Link  Login
     Set Username and Password  maija  Oupi0Veaa
