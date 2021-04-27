@@ -18,7 +18,6 @@ class ReadingTip(db.Model):
 
     def __init__(self, title, link, user, tags, **kwargs):
         super().__init__(**kwargs)
-        print(title, link, user)
         self.title = title
         self.link = link
         self.user = user
