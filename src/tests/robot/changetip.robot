@@ -5,7 +5,7 @@ Suite Teardown  Close Browser
 Test Setup  Go To Main Page
 
 *** Test Cases ***
-Edit Tip Succesfully
+Editing Tip Changes Name And Link
     Create User And Login  tip_editor  tip_editor
 
     Click Link  Add new

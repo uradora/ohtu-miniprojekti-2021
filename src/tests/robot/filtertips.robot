@@ -5,7 +5,7 @@ Suite Teardown  Close Browser
 Test Setup  Go To Main Page
 
 *** Test Cases ***
-Filter Tips Succesfully
+Filtering Tips Displays Only Tips With Selected Tag
     Select From List By Label  tag  tag1
     Page Should Contain  testi1
     Page Should Not Contain  testi2

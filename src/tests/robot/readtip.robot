@@ -7,7 +7,7 @@ Test Setup  Go To Main Page
 
 
 *** Test Cases ***
-Mark Tip As Read Succesfully
+Marking Tip As Read Displays Date
     ${date}  Get Current Date  result_format=%d/%m/%Y
 
     Create User And Login  tip_reader  tip_reader
