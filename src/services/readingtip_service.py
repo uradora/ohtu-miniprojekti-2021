@@ -1,10 +1,10 @@
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from models.readingtip import ReadingTip
 from models.tag import Tag
 from login import (login_service as default_login_service)
 from repositories.readingtip_repository import (readingtip_repository as default_repository)
 from repositories.tag_repository import (tag_repository as default_tag_repository)
-from datetime import datetime
 
 class ReadingTipService:
     def __init__(self, readingtip_repository=default_repository,
@@ -68,7 +68,7 @@ class ReadingTipService:
         assert self._login_service.is_authenticated()
         tip = self._readingtip_repository.get_tip(tip_id)
         if tip.user == self._login_service.current_user() and not tip.read:
-            date = datetime.now().strftime("%d/%m/%Y, %H:%M")
+            date = datetime.now(ZoneInfo("Europe/Helsinki")).strftime("%d/%m/%Y, %H:%M")
             self._readingtip_repository.read_tip(tip, date)
             return True
         else:

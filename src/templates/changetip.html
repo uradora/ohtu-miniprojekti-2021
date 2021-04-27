@@ -5,30 +5,30 @@
 {% block body %}
 
 <h2 class="mb-3">Edit tip</h2>
-<p class="mb-0">Current title: &nbsp {{tip.title}}</p>
-<p>Current link: &nbsp {{tip.link}}</p>
+
+<div>
+    <b class="me-1">Current title:</b>
+    {{tip.title}}
+</div>
+<div class="mb-3">
+    <b class="me-1">Current link:</b>
+    {{tip.link}}
+</div>
 
 <form action="/changetip/{{tip.id}}" method="POST">
-
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label for="title" class="col-form-label">Title</label>
-            <input type="text" class="form-control" value="{{tip.title}}" name="edited_title" id="title">
-        </div>
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" value="{{tip.title}}" name="edited_title" id="title">
     </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label for="link" class="col-sm-2 col-form-label">Link</label>
-            <input type="text" class="form-control" value="{{tip.link}}" name="edited_link" id="link">
-        </div>
+    <div class="mb-3">
+        <label for="link" class="form-label">Link</label>
+        <input type="text" class="form-control" value="{{tip.link}}" name="edited_link" id="link">
     </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label for="tags" class="col-form-label">Tags</label>
-            <input type="text" class="form-control" value="{{tags}}" name="edited_tags" id="tags">
-        </div>
+    <div class="mb-3">
+        <label for="tags" class="form-label">Tags</label>
+        <input type="text" class="form-control" value="{{tags}}" name="edited_tags" id="tags">
     </div>
 
     <button type="submit" class="btn btn-primary">Submit changes</button>

@@ -73,7 +73,7 @@ def userpage():
             tag = "all"
         tips=readingtip_service.get_tips(tag)
         tags =tag_service.get_tags()
-        return render_template("userpage.html", tips=tips, tags=tags)
+        return render_template("userpage.html", tips=tips, tags=tags, filter_tag=tag)
     else:
         return render_template("login.html")
 
