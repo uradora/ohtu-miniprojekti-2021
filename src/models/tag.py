@@ -1,3 +1,4 @@
+from sqlalchemy.orm import validates
 from database import db
 
 class Tag(db.Model):

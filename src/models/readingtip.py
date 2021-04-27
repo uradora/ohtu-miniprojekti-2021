@@ -1,7 +1,6 @@
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 from database import db
-from models.tag import Tag
 
 tips_to_tags_table = db.Table("tipsToTagsTable",
     db.Column("tip_id", db.Integer, db.ForeignKey("reading_tip.id")),
@@ -36,13 +35,13 @@ class ReadingTip(db.Model):
         self._link = link
 
     @validates("title")
-    def validate_title(self, key, title):
+    def validate_title(self, _key, title):
         assert len(title) > 0, "Title must not be empty"
         assert len(title) <= 80, "Title is too long"
         return title
 
     @validates("_link")
-    def validate_link(self, key, link):
+    def validate_link(self, _key, link):
         if link.startswith("http://"):
             assert len(link) > len("http://"), "Link must not be empty"
         elif link.startswith("https://"):

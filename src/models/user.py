@@ -21,7 +21,7 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     @validates("username")
-    def validate_username(self, key, username):
+    def validate_username(self, _key, username):
         assert len(username) > 0, "Username must not be empty"
         assert len(username) <= 80, "Username is too long"
         return username

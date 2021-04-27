@@ -19,10 +19,6 @@ class UserRepository:
         return user
 
     def contains_username(self, username):
-        if User.query.filter_by(username=username).first():
-            return True
-        else:
-            return False
-
+        return bool(User.query.filter_by(username=username).first())
 
 user_repository = UserRepository()

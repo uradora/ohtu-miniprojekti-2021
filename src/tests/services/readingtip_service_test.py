@@ -155,7 +155,8 @@ class TestReadingTipService(unittest.TestCase):
         assert self.service.get_tips()[0].read is not None
 
     def test_cannot_read_others_tip(self):
-        tip = self.service.create_tip("Maijan kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
+        tip = self.service.create_tip("Maijan kirja", "kirjakauppa.fi/123",
+                                      ["kirjat", "maksulliset"])
         other_user = User("mikko", "yah2Oozo")
         other_user.id = 2
         self.login.login_user(other_user)
@@ -165,4 +166,3 @@ class TestReadingTipService(unittest.TestCase):
     def test_can_get_tag_names_from_own_tip(self):
         tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
         self.assertEqual(self.service.get_tag_names(tip), ["kirjat", "maksulliset"])
-

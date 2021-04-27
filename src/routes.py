@@ -17,9 +17,9 @@ def newtip():
     title = request.form["title"]
     link = request.form["link"]
     tags = request.form["tags"].split(",")
-    strippedTags = [tag.strip() for tag in tags if tag.strip() != ""]
+    stripped_tags = [tag.strip() for tag in tags if tag.strip() != ""]
     try:
-        readingtip_service.create_tip(title, link, strippedTags)
+        readingtip_service.create_tip(title, link, stripped_tags)
     except AssertionError as error:
         flash_error(error)
         return redirect("/newtip")
@@ -29,18 +29,18 @@ def newtip():
 def create_tip():
     return render_template("newtip.html")
 
-@app.route("/changetip/<id>", methods=["GET","POST"])
-def change_tip(id):
+@app.route("/changetip/<tip_id>", methods=["GET","POST"])
+def change_tip(tip_id):
     if request.method == "POST":
         edited_title = request.form["edited_title"]
         edited_link = request.form["edited_link"]
         tags = request.form["edited_tags"].split(",")
-        strippedTags = [tag.strip() for tag in tags if tag.strip() != ""]
+        stripped_tags = [tag.strip() for tag in tags if tag.strip() != ""]
 
-        tip = readingtip_service.get_tip(id)
+        tip = readingtip_service.get_tip(tip_id)
 
         try:
-            readingtip_service.change_tip(tip, edited_title, edited_link, strippedTags)
+            readingtip_service.change_tip(tip, edited_title, edited_link, stripped_tags)
             flash("Tip edited successfully", "success")
             return redirect("/")
         except AssertionError as error:
@@ -48,23 +48,23 @@ def change_tip(id):
             return redirect("")
 
     if request.method == "GET":
-        tip = readingtip_service.get_tip(id)
+        tip = readingtip_service.get_tip(tip_id)
         tags = ", ".join(readingtip_service.get_tag_names(tip))
         return render_template("changetip.html", tip=tip, tags=tags)
 
-@app.route("/deletetip/<id>")
-def delete_tip(id):
+@app.route("/deletetip/<tip_id>")
+def delete_tip(tip_id):
     try:
-        readingtip_service.delete_tip(id)
+        readingtip_service.delete_tip(tip_id)
         return redirect("/")
     except AssertionError as error:
         flash_error(error)
         return redirect("/")
 
-@app.route("/readtip/<id>")
-def read_tip(id):
+@app.route("/readtip/<tip_id>")
+def read_tip(tip_id):
     try:
-        readingtip_service.read_tip(id)
+        readingtip_service.read_tip(tip_id)
         return redirect("/")
     except AssertionError as error:
         flash_error(error)
@@ -74,7 +74,7 @@ def read_tip(id):
 def userpage():
     if user_service.is_authenticated():
         tag = request.args.get("tag")
-        if tag == None:
+        if tag is None:
             tag = "all"
         tips = readingtip_service.get_tips(tag)
         tags = tag_service.get_tags()

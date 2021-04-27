@@ -78,7 +78,9 @@ class ReadingTipService:
         assert self._login_service.is_authenticated()
         tip = self._readingtip_repository.get_tip(tip_id)
         if tip.user == self._login_service.current_user():
-            return self._readingtip_repository.get_tip(tip_id)
+            return tip
+        else:
+            return None
 
     def get_tag_names(self, tip):
         return [tag.name for tag in tip.tags]

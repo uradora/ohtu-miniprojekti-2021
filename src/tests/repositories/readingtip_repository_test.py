@@ -19,7 +19,6 @@ class TestReadingTip(unittest.TestCase):
         self.assertEqual(tips[0].tags[1].name, "maksulliset")
 
     def test_contains_title_if_not_present(self):
-        tags = [Tag("kirjat"), Tag("maksulliset")]
         assert not self.repository.contains_title(self.user, "Hyvä kirja")
 
     def test_contains_title_if_present(self):
@@ -37,7 +36,9 @@ class TestReadingTip(unittest.TestCase):
     def test_cannot_see_others_tip(self):
         tags = [Tag("kirjat"), Tag("maksulliset")]
         second_user = self.user_repository.register("mikko", "oko7Aeko")
-        self.repository.create_tip(ReadingTip("Hyvä kirja", "kirjakauppa.fi/123", second_user, tags))
+        self.repository.create_tip(
+            ReadingTip("Hyvä kirja", "kirjakauppa.fi/123", second_user, tags)
+        )
 
         assert not self.repository.contains_title(self.user, "Hyvä kirja")
         self.assertEqual(self.repository.get_tips(self.user, "all"), [])
@@ -45,8 +46,10 @@ class TestReadingTip(unittest.TestCase):
     def test_can_get_tips_based_on_tags(self):
         tags = [Tag("Hyvä")]
         self.repository.create_tip(ReadingTip("Hyvä kirja", "kirjakauppa.fi/123", self.user, tags))
-        secondTags = [Tag("Huono")]
-        self.repository.create_tip(ReadingTip("Huono kirja", "kirjakauppa.fi/123", self.user, secondTags))
+        second_tags = [Tag("Huono")]
+        self.repository.create_tip(
+            ReadingTip("Huono kirja", "kirjakauppa.fi/123", self.user, second_tags)
+        )
         self.assertEqual(len(self.repository.get_tips(self.user, "all")), 2)
         self.assertEqual(len(self.repository.get_tips(self.user, "Hyvä")), 1)
 
@@ -70,5 +73,3 @@ class TestReadingTip(unittest.TestCase):
         assert self.repository.get_tips(self.user)[0].read is None
         self.repository.read_tip(self.repository.get_tips(self.user)[0], "2021")
         assert self.repository.get_tips(self.user)[0].read is not None
-
-
