@@ -5,7 +5,7 @@ Suite Teardown  Close Browser
 Test Setup  Go To Main Page
 
 *** Test Cases ***
-Add Tags Succesfully
+Form Contains Field For Tags
     Click Link  Add new
     Set Title Link and Tag  taginLisäämisTesti  www.taginLisäämisTesti.fi  tag1, tag2
     Click Button  Add new tip
