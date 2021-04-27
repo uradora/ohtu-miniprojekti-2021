@@ -7,19 +7,19 @@ Test Setup  Go To Main Page
 *** Test Cases ***
 Add A Tip Succesfully
     Click Link  Add new
-    Set Title and Link  testi  www.testi.fi
+    Set Title and Link  testi  www.addingtesti.fi
     Click Button  Add new tip
-    Adding Should Succeed With  www.testi.fi
+    Adding Should Succeed With  www.addingtesti.fi
 
 Adding A Tip With The Same Name
     Click Link  Add new
-    Set Title and Link  testi  www.testi.fi
+    Set Title and Link  testi  www.addingtesti.fi
     Click Button  Add new tip
     Adding Should Fail With Message  Tips already contains tip with title testi
 
 Remove Tip
     Click Link  Remove
-    Page Should Not Contain  www.testi.fi
+    Page Should Not Contain  www.addingtesti.fi
 
 *** Keywords ***
 Adding Should Succeed With
