@@ -4,76 +4,81 @@ from services.readingtip_service import readingtip_service
 from services.user_service import user_service
 from services.tag_service import tag_service
 
+def flash_error(error):
+    error = error.args[0] if len(error.args) > 0 else None
+    category = "warning"
+    if error is None:
+        error = "Not authorized"
+        category = "danger"
+    flash(error, category)
+
 @app.route("/newtip", methods=["POST"])
 def newtip():
     title = request.form["title"]
-    tags =  request.form["tags"].split(",")
-    strippedTags = [tag.strip() for tag in tags if tag.strip() != ""]
-    if readingtip_service.contains_title(title):
-        flash(f"Tips already contains tip with title {title}")
+    link = request.form["link"]
+    tags = request.form["tags"].split(",")
+    stripped_tags = [tag.strip() for tag in tags if tag.strip() != ""]
+    try:
+        readingtip_service.create_tip(title, link, stripped_tags)
+    except AssertionError as error:
+        flash_error(error)
         return redirect("/newtip")
-    readingtip_service.create_tip(title, request.form["link"], strippedTags)
     return redirect("/")
 
 @app.route("/newtip")
 def create_tip():
     return render_template("newtip.html")
 
-@app.route("/changetip/<id>", methods=["GET","POST"])
-def change_tip(id):
+@app.route("/changetip/<tip_id>", methods=["GET","POST"])
+def change_tip(tip_id):
     if request.method == "POST":
         edited_title = request.form["edited_title"]
         edited_link = request.form["edited_link"]
         tags = request.form["edited_tags"].split(",")
-        strippedTags = [tag.strip() for tag in tags if tag.strip() != ""]
+        stripped_tags = [tag.strip() for tag in tags if tag.strip() != ""]
 
-        tip = readingtip_service.get_tip(id)
+        tip = readingtip_service.get_tip(tip_id)
 
-        if readingtip_service.contains_title(edited_title) and edited_title != tip.title:
-            flash(f"Tips already contains tip with title {edited_title}")
+        try:
+            readingtip_service.change_tip(tip, edited_title, edited_link, stripped_tags)
+            flash("Tip edited successfully", "success")
             return redirect("/")
-
-        if not edited_title or not edited_link:
-            flash(f"Tip editing failed: title or link cannot be empty")
-            return redirect("/")
-
-        if readingtip_service.change_tip(tip, edited_title, edited_link, strippedTags):
-            flash("Tip edited successfully")
-            return redirect("/")
-        else:
-            flash("Tip editing failed")
-            return redirect("/")
+        except AssertionError as error:
+            flash_error(error)
+            return redirect("")
 
     if request.method == "GET":
-        tip = readingtip_service.get_tip(id)
+        tip = readingtip_service.get_tip(tip_id)
         tags = ", ".join(readingtip_service.get_tag_names(tip))
         return render_template("changetip.html", tip=tip, tags=tags)
 
-@app.route("/deletetip/<id>")
-def delete_tip(id):
-    if readingtip_service.delete_tip(id):
+@app.route("/deletetip/<tip_id>")
+def delete_tip(tip_id):
+    try:
+        readingtip_service.delete_tip(tip_id)
         return redirect("/")
-    else:
-        flash("Delete failed")
+    except AssertionError as error:
+        flash_error(error)
         return redirect("/")
 
-@app.route("/readtip/<id>")
-def read_tip(id):
-    if readingtip_service.read_tip(id):
+@app.route("/readtip/<tip_id>")
+def read_tip(tip_id):
+    try:
+        readingtip_service.read_tip(tip_id)
         return redirect("/")
-    else:
-        flash("Marking tip as read failed")
+    except AssertionError as error:
+        flash_error(error)
         return redirect("/")
 
 @app.route("/")
 def userpage():
     if user_service.is_authenticated():
-        tag=request.args.get("tag")
-        if(tag == None):
+        tag = request.args.get("tag")
+        if tag is None:
             tag = "all"
-        tips=readingtip_service.get_tips(tag)
-        tags =tag_service.get_tags()
-        return render_template("userpage.html", tips=tips, tags=tags)
+        tips = readingtip_service.get_tips(tag)
+        tags = tag_service.get_tags()
+        return render_template("userpage.html", tips=tips, tags=tags, filter_tag=tag)
     else:
         return render_template("login.html")
 
@@ -83,11 +88,11 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if user_service.login(username, password):
-            flash("Login successful")
+            flash("Login successful", "success")
             return redirect("/")
         else:
-            flash("Login failed")
-            return redirect("/")
+            flash("Login failed", "warning")
+            return redirect("/login")
     else:
         return render_template("login.html")
 
@@ -101,12 +106,13 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        if user_service.register(username, password):
-            flash("Registration successful, you are now logged in")
+        try:
+            user_service.register(username, password)
+            flash("Registration successful, you are now logged in", "success")
             return redirect("/")
-        else:
-            flash("Register failed")
-            return redirect("/")
+        except AssertionError as error:
+            flash_error(error)
+            return redirect("/register")
     else:
         return render_template("register.html")
 

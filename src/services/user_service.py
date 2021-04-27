@@ -18,9 +18,9 @@ class UserService:
         self._login_service.logout_user()
 
     def register(self, username, password):
-        if self._user_repository.register(username, password) is not None:
-            return self.login(username, password)
-        return False
+        assert not self._user_repository.contains_username(username), "Username is taken"
+        self._user_repository.register(username, password)
+        self.login(username, password)
 
     def is_authenticated(self):
         return self._login_service.is_authenticated()

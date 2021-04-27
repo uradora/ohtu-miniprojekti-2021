@@ -1,4 +1,5 @@
 import unittest
+from pytest import raises
 from services.user_service import UserService
 from models.user import User
 from .login_service_stub import LoginServiceStub
@@ -24,6 +25,12 @@ class UserRepositoryStub:
         self._users.append(user)
         return user
 
+    def contains_username(self, username):
+        for user in self._users:
+            if user.username == username:
+                return True
+        return False
+
 
 class TestUserService(unittest.TestCase):
     def setUp(self):
@@ -34,12 +41,11 @@ class TestUserService(unittest.TestCase):
         self.service.logout()
 
     def test_register_new_username(self):
-        result = self.service.register("mikko", "yue3AeV4")
-        assert result
+        self.service.register("mikko", "yue3AeV4")
 
     def test_register_existing_username(self):
-        result = self.service.register("maija", "salasana123")
-        assert not result
+        with raises(AssertionError):
+            self.service.register("maija", "salasana123")
 
     def test_correct_login_sets_session(self):
         result = self.service.login("maija", "yue3AeV4")
