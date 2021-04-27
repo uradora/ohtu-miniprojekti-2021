@@ -38,6 +38,13 @@ Register Existing Username
     Click Button  Register
     Has Flash Message  Username is taken
 
+Newly Registered User is Logged In and Notified Accordingly
+    Click Link  Register
+    Set Username and Password  mikko  ieMev0ai
+    Click Button  Register
+    Main Page Should Be Open
+    Has Flash Message  you are now logged in
+
 *** Keywords ***
 Has Flash Message
     [Arguments]  ${text}
