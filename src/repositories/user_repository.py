@@ -13,12 +13,16 @@ class UserRepository:
             return None
 
     def register(self, username, password):
-        if User.query.filter_by(username=username).first():
-            return None
         user = User(username=username, password=password)
         db.session.add(user)
         db.session.commit()
         return user
+
+    def contains_username(self, username):
+        if User.query.filter_by(username=username).first():
+            return True
+        else:
+            return False
 
 
 user_repository = UserRepository()

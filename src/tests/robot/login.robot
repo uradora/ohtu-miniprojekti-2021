@@ -9,29 +9,28 @@ Register Successfully
     Click Link  Register
     Set Username and Password  maija  Oupi0Vea
     Click Button  Register
-    Main Page Open With Flash  Registration successful
+    Has Flash Message  Registration successful
 
 Login Successfully
     Click Link  Login
     Set Username and Password  maija  Oupi0Vea
     Click Button  Login
-    Main Page Open With Flash  Login successful
+    Has Flash Message  Login successful
 
 Login Incorrect Password
     Click Link  Login
     Set Username and Password  maija  Oupi0Veaa
     Click Button  Login
-    Main Page Open With Flash  Login failed
+    Has Flash Message  Login failed
 
 Register Existing Username
     Click Link  Register
     Set Username and Password  maija  salasana123
     Click Button  Register
-    Main Page Open With Flash  Register failed
+    Has Flash Message  Username is taken
 
 *** Keywords ***
-Main Page Open With Flash
+Has Flash Message
     [Arguments]  ${text}
-    Main Page Should Be Open
     Page Should Contain  ${text}
 

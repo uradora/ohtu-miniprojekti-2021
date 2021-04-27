@@ -4,15 +4,25 @@ from services.readingtip_service import readingtip_service
 from services.user_service import user_service
 from services.tag_service import tag_service
 
+def flash_error(error):
+    error = error.args[0] if len(error.args) > 0 else None
+    category = "warning"
+    if error is None:
+        error = "Not authorized"
+        category = "danger"
+    flash(error, category)
+
 @app.route("/newtip", methods=["POST"])
 def newtip():
     title = request.form["title"]
-    tags =  request.form["tags"].split(",")
+    link = request.form["link"]
+    tags = request.form["tags"].split(",")
     strippedTags = [tag.strip() for tag in tags if tag.strip() != ""]
-    if readingtip_service.contains_title(title):
-        flash(f"Tips already contains tip with title {title}", "warning")
+    try:
+        readingtip_service.create_tip(title, link, strippedTags)
+    except AssertionError as error:
+        flash_error(error)
         return redirect("/newtip")
-    readingtip_service.create_tip(title, request.form["link"], strippedTags)
     return redirect("/")
 
 @app.route("/newtip")
@@ -29,20 +39,13 @@ def change_tip(id):
 
         tip = readingtip_service.get_tip(id)
 
-        if readingtip_service.contains_title(edited_title) and edited_title != tip.title:
-            flash(f"Tips already contains tip with title {edited_title}", "warning")
-            return redirect("/")
-
-        if not edited_title or not edited_link:
-            flash(f"Tip editing failed: title or link cannot be empty", "warning")
-            return redirect("/")
-
-        if readingtip_service.change_tip(tip, edited_title, edited_link, strippedTags):
+        try:
+            readingtip_service.change_tip(tip, edited_title, edited_link, strippedTags)
             flash("Tip edited successfully", "success")
             return redirect("/")
-        else:
-            flash("Tip editing failed", "danger")
-            return redirect("/")
+        except AssertionError as error:
+            flash_error(error)
+            return redirect("")
 
     if request.method == "GET":
         tip = readingtip_service.get_tip(id)
@@ -51,28 +54,30 @@ def change_tip(id):
 
 @app.route("/deletetip/<id>")
 def delete_tip(id):
-    if readingtip_service.delete_tip(id):
+    try:
+        readingtip_service.delete_tip(id)
         return redirect("/")
-    else:
-        flash("Delete failed", "danger")
+    except AssertionError as error:
+        flash_error(error)
         return redirect("/")
 
 @app.route("/readtip/<id>")
 def read_tip(id):
-    if readingtip_service.read_tip(id):
+    try:
+        readingtip_service.read_tip(id)
         return redirect("/")
-    else:
-        flash("Marking tip as read failed", "danger")
+    except AssertionError as error:
+        flash_error(error)
         return redirect("/")
 
 @app.route("/")
 def userpage():
     if user_service.is_authenticated():
-        tag=request.args.get("tag")
-        if(tag == None):
+        tag = request.args.get("tag")
+        if tag == None:
             tag = "all"
-        tips=readingtip_service.get_tips(tag)
-        tags =tag_service.get_tags()
+        tips = readingtip_service.get_tips(tag)
+        tags = tag_service.get_tags()
         return render_template("userpage.html", tips=tips, tags=tags, filter_tag=tag)
     else:
         return render_template("login.html")
@@ -101,12 +106,13 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        if user_service.register(username, password):
+        try:
+            user_service.register(username, password)
             flash("Registration successful, you are now logged in", "success")
             return redirect("/")
-        else:
-            flash("Register failed", "warning")
-            return render_template("register.html")
+        except AssertionError as error:
+            flash_error(error)
+            return redirect("/register")
     else:
         return render_template("register.html")
 
