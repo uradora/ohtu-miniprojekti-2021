@@ -49,7 +49,6 @@ class ReadingTipService:
                 )
             tag_objects.append(self._tag_repository.get_tag(tag_name))
         tip = ReadingTip(title, link, user, tag_objects)
-        print(tip.title, tip.link)
         tip = self._readingtip_repository.create_tip(
             tip
         )
