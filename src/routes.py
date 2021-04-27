@@ -10,7 +10,7 @@ def newtip():
     tags =  request.form["tags"].split(",")
     strippedTags = [tag.strip() for tag in tags if tag.strip() != ""]
     if readingtip_service.contains_title(title):
-        flash(f"Tips already contains tip with title {title}")
+        flash(f"Tips already contains tip with title {title}", "warning")
         return redirect("/newtip")
     readingtip_service.create_tip(title, request.form["link"], strippedTags)
     return redirect("/")
@@ -30,18 +30,18 @@ def change_tip(id):
         tip = readingtip_service.get_tip(id)
 
         if readingtip_service.contains_title(edited_title) and edited_title != tip.title:
-            flash(f"Tips already contains tip with title {edited_title}")
+            flash(f"Tips already contains tip with title {edited_title}", "warning")
             return redirect("/")
 
         if not edited_title or not edited_link:
-            flash(f"Tip editing failed: title or link cannot be empty")
+            flash(f"Tip editing failed: title or link cannot be empty", "warning")
             return redirect("/")
 
         if readingtip_service.change_tip(tip, edited_title, edited_link, strippedTags):
-            flash("Tip edited successfully")
+            flash("Tip edited successfully", "success")
             return redirect("/")
         else:
-            flash("Tip editing failed")
+            flash("Tip editing failed", "danger")
             return redirect("/")
 
     if request.method == "GET":
@@ -54,7 +54,7 @@ def delete_tip(id):
     if readingtip_service.delete_tip(id):
         return redirect("/")
     else:
-        flash("Delete failed")
+        flash("Delete failed", "danger")
         return redirect("/")
 
 @app.route("/readtip/<id>")
@@ -62,7 +62,7 @@ def read_tip(id):
     if readingtip_service.read_tip(id):
         return redirect("/")
     else:
-        flash("Marking tip as read failed")
+        flash("Marking tip as read failed", "danger")
         return redirect("/")
 
 @app.route("/")
@@ -83,11 +83,11 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if user_service.login(username, password):
-            flash("Login successful")
+            flash("Login successful", "success")
             return redirect("/")
         else:
-            flash("Login failed")
-            return redirect("/")
+            flash("Login failed", "warning")
+            return redirect("/login")
     else:
         return render_template("login.html")
 
@@ -102,11 +102,11 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
         if user_service.register(username, password):
-            flash("Registration successful, you are now logged in")
+            flash("Registration successful, you are now logged in", "success")
             return redirect("/")
         else:
-            flash("Register failed")
-            return redirect("/")
+            flash("Register failed", "warning")
+            return render_template("register.html")
     else:
         return render_template("register.html")
 
