@@ -6,20 +6,21 @@ Test Setup  Go To Main Page
 
 *** Test Cases ***
 Filtering Tips Displays Only Tips With Selected Tag
-    Select From List By Label  tag  tag1
+    Click Button  Filter
+    Click Button  tag1
     Page Should Contain  testi1
     Page Should Not Contain  testi2
     Page Should Not Contain  testi3
-    Select From List By Label  tag  tag3
+    Click Button  Filter by: tag1
+    Click Button  tag3
     Page Should Not Contain  testi1
     Page Should Contain  testi2
     Page Should Contain  testi3
-    Select From List By Label  tag  all
+    Click Button  Filter by: tag3
+    Click Button  Disable
     Page Should Contain  testi1
     Page Should Contain  testi2
     Page Should Contain  testi3
-
-
 
 
 *** Keywords ***

@@ -5,7 +5,6 @@ from models.tag import Tag
 class TestTag(unittest.TestCase):
     def setUp(self):
         self.repository = TagRepository()
-        
 
     def test_create_tag(self):
         self.repository.create_tag(Tag("kirjat"))

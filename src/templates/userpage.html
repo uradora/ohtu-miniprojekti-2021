@@ -4,23 +4,42 @@
 
 {% block body %}
 
-<div class="table-responsive table-sm">
-    <form action="/" method ="GET">
-        <select name="tag" onchange="this.form.submit()">
-            <option>tag</option>
-            <option value="all">all</option>
+<form action="/" method ="GET">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="filterDropdownButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% if filter_tag == "all" %}
+            Filter
+            {% else %}
+            Filter by: {{ filter_tag }}
+            {% endif %}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="filterDropdownButton">
+            <li>
+                <button class="dropdown-item {{ "active" if filter_tag == "all" else None }}"
+                    type="submit">
+                    Disable
+                </button>
+            </li>
+            <li><hr class="dropdown-divider"></li>
             {% for tag in tags %}
-            <option value="{{ tag.name }}">{{ tag.name }}</option>
+            <li>
+                <button class="dropdown-item {{ "active" if tag.name == filter_tag else None }}"
+                    type="submit" name="tag" value="{{ tag.name }}">
+                    {{ tag.name }}
+                </button>
+            </li>
             {% endfor %}
-            
-        </select>
-    </form>
+        </ul>
+    </div>
+</form>
+<div class="table-responsive table-sm">
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Link</th>
-                <th scope="col">Read date</th>
+                <th scope="col" class="th-lg">Title</th>
+                <th scope="col" class="th-lg">Link</th>
+                <th scope="col" class="th-sm">Read date</th>
+                <th scope="col" class="th-sm">Action</th>
             </tr>
         </thead>
 
@@ -28,16 +47,17 @@
             {% for tip in tips %}
             <tr>
                 <td colspan="1">{{ tip.title }}</td>
-                <td colspan="1"> <a href="{{ tip.link }}">{{ tip.link }}</a> </td>
-                <td colspan="1">{% if tip.read %} {{ tip.read }} {% endif %}</td>
+                <td colspan="1"><a href="{{ tip.link }}">{{ tip.link }}</a> </td>
                 <td colspan="1">
-                    <a href="/deletetip/{{tip.id}}" class="btn btn-outline-primary">Remove</a>
+                    {% if tip.read %}
+                        {{ tip.read }}
+                    {% else %}
+                        <a href="/readtip/{{tip.id}}" class="btn btn-outline-primary">Mark as read</a>
+                    {% endif %}
                 </td>
                 <td colspan="1">
                     <a href="/changetip/{{tip.id}}" class="btn btn-outline-primary">Edit</a>
-                </td>
-                <td colspan="1">
-                    <a href="/readtip/{{tip.id}}" class="btn btn-outline-primary">Mark as read</a>
+                    <a href="/deletetip/{{tip.id}}" class="btn btn-outline-primary">Remove</a>
                 </td>
             </tr>
             {% endfor %}

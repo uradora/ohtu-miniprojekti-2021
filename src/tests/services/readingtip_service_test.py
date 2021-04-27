@@ -1,4 +1,5 @@
 import unittest
+from pytest import raises
 from services.readingtip_service import ReadingTipService
 from models.user import User
 from .login_service_stub import LoginServiceStub
@@ -100,7 +101,7 @@ class TestReadingTipService(unittest.TestCase):
 
     def test_can_delete_own_tip(self):
         tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
-        assert self.service.delete_tip(tip.id)
+        self.service.delete_tip(tip.id)
         assert not self.service.contains_title("Hyvä kirja")
 
     def test_cannot_delete_others_tip(self):
@@ -109,7 +110,8 @@ class TestReadingTipService(unittest.TestCase):
         self.login.login_user(other_user)
         tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
         self.login.login_user(self.user)
-        assert not self.service.delete_tip(tip.id)
+        with raises(AssertionError):
+            self.service.delete_tip(tip.id)
         self.login.login_user(other_user)
         assert self.service.contains_title("Hyvä kirja")
 
@@ -127,18 +129,19 @@ class TestReadingTipService(unittest.TestCase):
 
     def test_can_change_own_tip(self):
         tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
-        assert self.service.change_tip(tip, "Muutettu kirja", "kirjakauppa.fi/123", ["kirjat"])
+        self.service.change_tip(tip, "Muutettu kirja", "kirjakauppa.fi/123", ["kirjat"])
 
     def test_tag_is_added_if_doesnt_exist(self):
         tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
-        assert self.service.change_tip(tip, "Muutettu kirja", "kirjakauppa.fi/123", ["kalliit"])
+        self.service.change_tip(tip, "Muutettu kirja", "kirjakauppa.fi/123", ["kalliit"])
 
     def test_cannot_change_others_tip(self):
         tip = self.service.create_tip("Maijan kirja", "kirjakauppa.fi/123", ["kirjat"])
         other_user = User("mikko", "yah2Oozo")
         other_user.id = 2
         self.login.login_user(other_user)
-        assert not self.service.change_tip(tip, "Mikon kirja", "kirjakauppa.fi/123", ["maksulliset"])
+        with raises(AssertionError):
+            self.service.change_tip(tip, "Mikon kirja", "kirjakauppa.fi/123", ["maksulliset"])
 
     def test_can_get_one_tip(self):
         self.service.create_tip("Eka kirja", "ekakauppa.fi/123", ["kirjat"])
@@ -148,17 +151,18 @@ class TestReadingTipService(unittest.TestCase):
 
     def test_can_read_own_tip(self):
         tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
-        assert self.service.read_tip(tip.id)
+        self.service.read_tip(tip.id)
         assert self.service.get_tips()[0].read is not None
 
     def test_cannot_read_others_tip(self):
-        tip = self.service.create_tip("Maijan kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
+        tip = self.service.create_tip("Maijan kirja", "kirjakauppa.fi/123",
+                                      ["kirjat", "maksulliset"])
         other_user = User("mikko", "yah2Oozo")
         other_user.id = 2
         self.login.login_user(other_user)
-        assert not self.service.read_tip(tip.id)
+        with raises(AssertionError):
+            self.service.read_tip(tip.id)
 
     def test_can_get_tag_names_from_own_tip(self):
         tip = self.service.create_tip("Hyvä kirja", "kirjakauppa.fi/123", ["kirjat", "maksulliset"])
         self.assertEqual(self.service.get_tag_names(tip), ["kirjat", "maksulliset"])
-

@@ -10,9 +10,9 @@ class TestUserRepository(unittest.TestCase):
         user = self.repository.register("matti", "salasana123")
         assert user is not None
 
-    def test_register_user_existing_username(self):
-        user = self.repository.register("maija", "salasana123")
-        assert user is None
+    def test_contains_username_existing(self):
+        result = self.repository.contains_username("maija")
+        assert result
 
     def test_check_login_correct(self):
         result = self.repository.check_login("maija", "Ahlie8oh")

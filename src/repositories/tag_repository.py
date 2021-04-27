@@ -9,7 +9,7 @@ class TagRepository:
         return Tag.query.filter_by(name=name).first()
 
     def get_tags(self, user=None):
-        if user == None:
+        if user is None:
             return Tag.query.all()
         return Tag.query.filter(Tag.tips.any(user=user)).all()
 
@@ -18,7 +18,6 @@ class TagRepository:
         db.session.commit()
         return tag
 
-    
     def contains_tag(self, name):
         amount = Tag.query.filter_by(name=name).count()
         return amount > 0
