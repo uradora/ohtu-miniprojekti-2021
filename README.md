@@ -8,6 +8,8 @@ Coursework for Ohjelmistotuotanto spring 2021 course
 
 [App in Heroku](https://python-lukuvinkit.herokuapp.com/)
 
+[Final Report](https://github.com/uradora/ohtu-miniprojekti-2021/blob/main/FinalReport.md)
+
 # Definition of done:
 - Story on dokumentoitu product backlogiin ja työmäärä estimoitu
 - Toiminnalliset vaatimukset testattu Robot Frameworkilla
