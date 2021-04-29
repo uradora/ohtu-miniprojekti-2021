@@ -32,3 +32,5 @@ käytön estimointi ja toisaalta mahdollinen taskien uudelleendelegointi sen jä
 ryhmätyöskentelystä ja siihen liittyvistä haasteista. Kurssin kontekstissa nämä asiat tuntuivat riittäviltä oppimiseen nähden, joten toiveita opittavista asioista 
 ei tullut. Turhilta tuntuvia asioita ei juurikaan ollut, vaikka jotkin sovellukseen toteutetut tai ehdotetut yksityiskohdat olivat ehkä liian hienoksi hiottuja ottaen 
 työn tarkoitus ja laajuus huomioon.
+
+**Meri**: Opin product backlogin tekemisestä, retrospektiiveistä ja muista Scrumin käytänteistä, jotka eivät olleet entuudestaan tuttuja. Eniten halusin oppia dokumentaatiosta ja tiimityöskentelystä lisää, ja opinkin jonkin verran, mutta näin lyhyessä projektissa pääpaino ei ollut siinä, kun kuitenkin teknistä toteutettavaa oli paljon. Siihen liittyen luin paljon ORMia käyttävistä tietokannoista, koska vain suorat SQL-kyselyt olivat ennestään tuttuja. Windowsin aiheuttamat tekniset haasteet taas opettivat jälleen lisää ongelmanratkaisua. Turhalta tuntui ehkä käyttää palavereihin niin paljon aikaa, mutta tämä ongelma korjattiin.
