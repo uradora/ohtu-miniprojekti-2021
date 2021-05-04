@@ -34,3 +34,8 @@ ei tullut. Turhilta tuntuvia asioita ei juurikaan ollut, vaikka jotkin sovelluks
 työn tarkoitus ja laajuus huomioon.
 
 **Meri**: Opin product backlogin tekemisestä, retrospektiiveistä ja muista Scrumin käytänteistä, jotka eivät olleet entuudestaan tuttuja. Eniten halusin oppia dokumentaatiosta ja tiimityöskentelystä lisää, ja opinkin jonkin verran, mutta näin lyhyessä projektissa pääpaino ei ollut siinä, kun kuitenkin teknistä toteutettavaa oli paljon. Siihen liittyen luin paljon ORMia käyttävistä tietokannoista, koska vain suorat SQL-kyselyt olivat ennestään tuttuja. Windowsin aiheuttamat tekniset haasteet taas opettivat jälleen lisää ongelmanratkaisua. Turhalta tuntui ehkä käyttää palavereihin niin paljon aikaa, mutta tämä ongelma korjattiin.
+
+**Roope**: Scrumiin ja prosessiin muutenkin liittyen oli paljon opittavaa. "Extremly difficult to master" -lausahduksen merkitys tuli konkreettisesti selväksi.
+Teknisellä tasolla oli mielenkiintoista yhdistellä aiemmin opittua, esimerkiksi testausta, ORMia ja kerrosarkkitehtuuria. Näiden yhdistelmä osoittautui hankalaksi, koska ORM käytännössä vaatii tietokantayhteyden toimiakseen ja toistaalta stubien kirjoittaminen modeleille olisi hankalaa. Huomasin, että ORM sotii melko paljon kerrosarkkitehtuurin periaatteita vastaan, kun olioille määritellään tietokantakerroksen toiminnallisuuksia - tämähän on melko yleinen kritiikki ORMia kohtaan.
+Sanoisin samaa siitä, että palaverit venyivät turhan pitkiksi, johtuen esim. taskien jaon epävarmuudesta.
+
